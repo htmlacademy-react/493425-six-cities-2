@@ -4,7 +4,7 @@ type MainPageProps = {
   cards: Card[];
 }
 
-function Main({ cards }: MainPageProps): JSX.Element {
+function Main({ cards }: MainPageProps): React.JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">

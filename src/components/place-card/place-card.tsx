@@ -20,7 +20,7 @@ type PlaceCardProps = {
   card: Card;
 }
 
-function PlaceCard({ card }: PlaceCardProps): JSX.Element {
+function PlaceCard({ card }: PlaceCardProps): React.JSX.Element {
   return (
     <article className="cities__card place-card">
       {card.isPremium &&

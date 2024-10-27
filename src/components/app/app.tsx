@@ -5,7 +5,7 @@ type AppProps = {
   cards: Card[];
 }
 
-function App({cards}: AppProps): JSX.Element {
+function App({cards}: AppProps): React.JSX.Element {
   return (
     <Main cards={cards}></Main>
   );
