@@ -1,5 +1,5 @@
+import { Card } from '../../models';
 import Main from '../../pages/main/main';
-import { Card } from '../place-card/place-card';
 
 type AppProps = {
   cards: Card[];
