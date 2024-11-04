@@ -25,13 +25,14 @@ function App({cards}: AppProps): React.JSX.Element {
               <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
                 <Favorites />
               </PrivateRoute>
-            } />
+            }
+            />
             <Route path={Routing.Offer}>
               <Route index element={<NotFound />} />
               <Route path=':id' element={<Offer />} />
             </Route>
-            </Route>
-            <Route path='*' element={<NotFound />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

@@ -1,4 +1,4 @@
-import { Card } from '../../models';
+import { Card } from '../../lib/types/types';
 
 type PlaceCardProps = {
   card: Card;

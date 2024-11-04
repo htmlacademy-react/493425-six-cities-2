@@ -1,17 +1,17 @@
 import React from 'react';
 import {Outlet} from 'react-router-dom';
 import { RoutingType, Routing } from '../../lib/types/types';
-import { getBasePath } from '../../lib/utils/use-base-path';
+import { useBasePath } from '../../hooks/use-base-path';
 import { LAYOUT_CLASSES, SECTOR_MAIN_CLASSES } from '../../consts';
 
 function Layout (): React.JSX.Element {
-  const pathname = getBasePath() as RoutingType;
+  const pathname = useBasePath() as RoutingType;
   const layoutClass = LAYOUT_CLASSES[pathname];
   const mainClass = SECTOR_MAIN_CLASSES[pathname];
   const isFooterExist = pathname === Routing.Favorites;
 
   return (
-    <div className={'page ' + layoutClass}>
+    <div className={`page ${ layoutClass}`}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -47,7 +47,7 @@ function Layout (): React.JSX.Element {
           </div>
         </div>
       </header>
-      <main className={'page__main ' + mainClass}>
+      <main className={`page__main ${ mainClass}`}>
         <Outlet />
       </main>
       {isFooterExist &&

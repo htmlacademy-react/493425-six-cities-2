@@ -1,4 +1,4 @@
-import { RoutingType, Card, Place, Routing } from "./lib/types/types";
+import { RoutingType, Card, Place, Routing } from './lib/types/types';
 
 export const CARDS: Card[] = [
   {
