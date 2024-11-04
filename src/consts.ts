@@ -1,4 +1,4 @@
-import { Card, Place } from './models';
+import { RoutingType, Card, Place, Routing } from "./lib/types/types";
 
 export const CARDS: Card[] = [
   {
@@ -52,3 +52,19 @@ export const CARDS: Card[] = [
     type: Place.Private
   }
 ];
+
+export const LAYOUT_CLASSES: { [key in RoutingType]: string } = {
+  [Routing.Main]: 'page--gray page--main',
+  [Routing.Favorites]: '',
+  [Routing.Login]: 'page--gray page--login',
+  [Routing.Offer]: '',
+  [Routing.NotFound]: 'page--gray'
+};
+
+export const SECTOR_MAIN_CLASSES: { [key in RoutingType]: string } = {
+  [Routing.Main]: 'page__main--index',
+  [Routing.Favorites]: 'page__main--favorites',
+  [Routing.Login]: 'page__main--login',
+  [Routing.Offer]: 'page__main--offer',
+  [Routing.NotFound]: 'page__main--index'
+};
