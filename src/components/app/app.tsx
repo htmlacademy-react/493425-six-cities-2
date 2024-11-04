@@ -31,8 +31,8 @@ function App({cards}: AppProps): React.JSX.Element {
               <Route index element={<NotFound />} />
               <Route path=':id' element={<Offer />} />
             </Route>
+            <Route path='*' element={<NotFound />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
