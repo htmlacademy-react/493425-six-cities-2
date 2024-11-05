@@ -1,4 +1,5 @@
-import { Card } from '../../models';
+import { Link } from 'react-router-dom';
+import { Card, Routing } from '../../lib/types/types';
 
 type PlaceCardProps = {
   card: Card;
@@ -12,7 +13,7 @@ function PlaceCard({ card }: PlaceCardProps): React.JSX.Element {
                 <span>Premium</span>
               </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${Routing.Offer}/${card.id}`}>
           <img
             className="place-card__image"
             src={card.imgSrc}
@@ -20,7 +21,7 @@ function PlaceCard({ card }: PlaceCardProps): React.JSX.Element {
             height={200}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -45,7 +46,7 @@ function PlaceCard({ card }: PlaceCardProps): React.JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{ card. name }</a>
+          <Link to={`${Routing.Offer}/${card.id}`}>{ card. name }</Link>
         </h2>
         <p className="place-card__type">{ card.type }</p>
       </div>

@@ -1,0 +1,11 @@
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.link {
+  color: #4481c3;
+}
