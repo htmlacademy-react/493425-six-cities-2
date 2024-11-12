@@ -1,14 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Card } from '../../lib/types/types';
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceOffer from '../../components/place-card/place-card';
+import { TOfferCard } from '../../lib/types/offer-card';
 
 type FavoritesProps = {
-  cards: Card[];
+  offers: TOfferCard[];
 }
 
-function Favorites({ cards }: FavoritesProps): React.JSX.Element {
-  const cities = [...new Set(cards.map((card: Card) => card.city))];
+function Favorites({ offers }: FavoritesProps): React.JSX.Element {
+  const cities = [...new Set(offers.map((card: TOfferCard) => card.city.name))];
   return (
     <>
       <Helmet>
@@ -28,10 +28,10 @@ function Favorites({ cards }: FavoritesProps): React.JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {cards
-                    .filter((card: Card) => card.city === city)
-                    .map((card: Card) => (
-                      <PlaceCard
+                  {offers
+                    .filter((card: TOfferCard) => card.city.name === city)
+                    .map((card: TOfferCard) => (
+                      <PlaceOffer
                         key={card.id}
                         card={card}
                         isFavorite

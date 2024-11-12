@@ -1,14 +1,14 @@
 import React from 'react';
 import {Outlet} from 'react-router-dom';
-import { RoutingType, Routing } from '../../lib/types/types';
 import { useBasePath } from '../../hooks/use-base-path';
 import { LAYOUT_CLASSES, SECTOR_MAIN_CLASSES } from '../../const';
 import clsx from 'clsx';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import { TRouting, Routing } from '../../lib/types/routing';
 
 function Layout (): React.JSX.Element {
-  const pathname = useBasePath() as RoutingType;
+  const pathname = useBasePath() as TRouting;
   const layoutClasses = LAYOUT_CLASSES[pathname];
   const mainClasses = SECTOR_MAIN_CLASSES[pathname];
   const isFooterExist = pathname === Routing.Favorites;

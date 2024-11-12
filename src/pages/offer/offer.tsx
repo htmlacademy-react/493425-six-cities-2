@@ -1,14 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import ReviewForm from '../../components/review-form/review-form';
-import { Card, ReviewFormValue } from '../../lib/types/types';
-import { CARDS } from '../../mocks/cards';
+import { TReviewFormValue } from '../../lib/types/review-form-value';
+import { OFFERS } from '../../mocks/offers';
+import { TOfferCard } from '../../lib/types/offer-card';
 
 function Offer(): React.JSX.Element {
   const { id } = useParams();
-  const cardInfo = CARDS.find((card: Card) => card.id === Number(id)) as Card;
+  const cardInfo = OFFERS.find((card: TOfferCard) => card.id === Number(id)) as TOfferCard;
 
-  function handleSubmitReview(value: ReviewFormValue) {
+  function handleSubmitReview(value: TReviewFormValue) {
     throw new Error(value.review);
   }
 
@@ -72,13 +73,13 @@ function Offer(): React.JSX.Element {
               </div>}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                {cardInfo.name}
+                {cardInfo.title}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark" />
                 </svg>
-                <span className="visually-hidden">{cardInfo.inBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
+                <span className="visually-hidden">{cardInfo.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
               </button>
             </div>
             <div className="offer__rating rating">

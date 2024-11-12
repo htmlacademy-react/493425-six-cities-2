@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Routing } from '../../lib/types/types';
+import { Routing } from '../../lib/types/routing';
 
 function Header(): React.JSX.Element {
   return (

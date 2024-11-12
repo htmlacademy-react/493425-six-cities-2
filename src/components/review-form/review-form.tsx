@@ -1,23 +1,20 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { ReviewFormValue } from '../../lib/types/types';
+import { TReviewFormValue } from '../../lib/types/review-form-value';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATES } from '../../const';
 
 type ReviewFormProps = {
-  onSubmitForm: (value: ReviewFormValue) => void;
+  onSubmitForm: (value: TReviewFormValue) => void;
 };
-
-const rates: string[] = [
-  'perfect',
-  'good',
-  'not bad',
-  'badly',
-  'terribly'
-];
 
 function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
   const [value, setValue] = useState({
     review: '',
-    rating: 0
+    rating: ''
   });
+
+  const isValid = value.rating !== ''
+    && value.review.length > MIN_COMMENT_LENGTH
+    && value.review.length < MAX_COMMENT_LENGTH;
 
   function handleFieldChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
     const fieldName = e.target.name;
@@ -45,7 +42,7 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {rates.map((title, i) => (
+        {RATES.map((title, i) => (
           <Fragment key={title}>
             <input
               className="form__rating-input visually-hidden"
@@ -85,7 +82,7 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isValid}
         >
           Submit
         </button>
