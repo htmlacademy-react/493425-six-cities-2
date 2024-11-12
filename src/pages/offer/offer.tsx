@@ -6,10 +6,10 @@ import { CARDS } from '../../mocks/cards';
 
 function Offer(): React.JSX.Element {
   const { id } = useParams();
-  const cardInfo = CARDS.find((card: Card) => card.id === Number(id));
-  
+  const cardInfo = CARDS.find((card: Card) => card.id === Number(id)) as Card;
+
   function handleSubmitReview(value: ReviewFormValue) {
-    console.log(value);
+    throw new Error(value.review);
   }
 
   return (
@@ -66,29 +66,30 @@ function Offer(): React.JSX.Element {
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            {cardInfo?.isPremium && <div className="offer__mark">
-              <span>Premium</span>
-            </div>}
+            {cardInfo.isPremium &&
+              <div className="offer__mark">
+                <span>Premium</span>
+              </div>}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                {cardInfo?.name}
+                {cardInfo.name}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark" />
                 </svg>
-                <span className="visually-hidden">{cardInfo?.inBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
+                <span className="visually-hidden">{cardInfo.inBookmarks ? 'In bookmarks' : 'To bookmarks'}</span>
               </button>
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{ width: `${cardInfo?.rating }%` }} />
+                <span style={{ width: `${cardInfo.rating }%` }} />
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">4.8</span>
             </div>
             <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">{cardInfo?.type}</li>
+              <li className="offer__feature offer__feature--entire">{cardInfo.type}</li>
               <li className="offer__feature offer__feature--bedrooms">
                 3 Bedrooms
               </li>
@@ -97,7 +98,7 @@ function Offer(): React.JSX.Element {
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">€{cardInfo?.price}</b>
+              <b className="offer__price-value">€{cardInfo.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">

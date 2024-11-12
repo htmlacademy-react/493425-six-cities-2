@@ -36,8 +36,7 @@ function Favorites({ cards }: FavoritesProps): React.JSX.Element {
                         card={card}
                         isFavorite
                       />
-                    ))
-                  }
+                    ))}
                 </div>
               </li>
             ))}

@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from "react";
-import { ReviewFormValue } from "../../lib/types/types";
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ReviewFormValue } from '../../lib/types/types';
 
 type ReviewFormProps = {
   onSubmitForm: (value: ReviewFormValue) => void;
@@ -39,7 +39,8 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
       onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         onSubmitForm(value);
-      }}>
+      }}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>

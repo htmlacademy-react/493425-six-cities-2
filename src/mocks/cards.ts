@@ -1,4 +1,4 @@
-import { Card, Place } from "../lib/types/types";
+import { Card, Place } from '../lib/types/types';
 
 export const CARDS: Card[] = [
   {
