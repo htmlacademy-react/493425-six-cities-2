@@ -22,15 +22,12 @@ function App({cards}: AppProps): React.JSX.Element {
             <Route index element={<Main cards={cards} />} />
             <Route path={Routing.Login} element={<Login />} />
             <Route path={Routing.Favorites} element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <Favorites />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <Favorites cards={cards} />
               </PrivateRoute>
             }
             />
-            <Route path={Routing.Offer}>
-              <Route index element={<NotFound />} />
-              <Route path=':id' element={<Offer />} />
-            </Route>
+            <Route path={`${Routing.Offer}/:id`} element={<Offer />} />
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>

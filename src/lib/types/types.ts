@@ -14,9 +14,11 @@ export type Card = {
   rating: number;
   name: string;
   type: PlaceType;
+  city: string;
 };
 
 export const Routing = {
+  Empty: '',
   Main: '/',
   Login: '/login',
   Favorites: '/favorites',
@@ -33,3 +35,8 @@ export const AuthorizationStatus = {
 } as const;
 
 export type AuthorizationStatusType = (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus];
+
+export type ReviewFormValue = {
+  review: string;
+  rating: number;
+};

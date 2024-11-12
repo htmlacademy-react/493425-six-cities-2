@@ -1,4 +1,4 @@
-import { RoutingType, Card, Place, Routing } from './lib/types/types';
+import { Card, Place } from "../lib/types/types";
 
 export const CARDS: Card[] = [
   {
@@ -9,7 +9,8 @@ export const CARDS: Card[] = [
     inBookmarks: false,
     rating: 80,
     name: 'Beautiful &amp; luxurious apartment at great location',
-    type: Place.Apartment
+    type: Place.Apartment,
+    city: 'Paris'
   },
   {
     id: 1,
@@ -19,7 +20,8 @@ export const CARDS: Card[] = [
     inBookmarks: true,
     rating: 80,
     name: 'Wood and stone place',
-    type: Place.Private
+    type: Place.Private,
+    city: 'Paris'
   },
   {
     id: 2,
@@ -29,7 +31,8 @@ export const CARDS: Card[] = [
     inBookmarks: false,
     rating: 80,
     name: 'Canal View Prinsengracht',
-    type: Place.Apartment
+    type: Place.Apartment,
+    city: 'Paris'
   },
   {
     id: 3,
@@ -39,7 +42,8 @@ export const CARDS: Card[] = [
     inBookmarks: false,
     rating: 100,
     name: 'Nice, cozy, warm big bed apartment',
-    type: Place.Apartment
+    type: Place.Apartment,
+    city: 'Amsterdam'
   },
   {
     id: 4,
@@ -49,22 +53,7 @@ export const CARDS: Card[] = [
     inBookmarks: true,
     rating: 80,
     name: 'Wood and stone place',
-    type: Place.Private
+    type: Place.Private,
+    city: 'Brussels'
   }
 ];
-
-export const LAYOUT_CLASSES: { [key in RoutingType]: string } = {
-  [Routing.Main]: 'page--gray page--main',
-  [Routing.Favorites]: '',
-  [Routing.Login]: 'page--gray page--login',
-  [Routing.Offer]: '',
-  [Routing.NotFound]: 'page--gray'
-};
-
-export const SECTOR_MAIN_CLASSES: { [key in RoutingType]: string } = {
-  [Routing.Main]: 'page__main--index',
-  [Routing.Favorites]: 'page__main--favorites',
-  [Routing.Login]: 'page__main--login',
-  [Routing.Offer]: 'page__main--offer',
-  [Routing.NotFound]: 'page__main--index'
-};

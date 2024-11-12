@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import PlaceCard from '../../components/place-card/place-card';
 import { Card } from '../../lib/types/types';
 import { Link } from 'react-router-dom';
+import Offers from '../../components/offers/offers';
 
 type MainPageProps = {
   cards: Card[];
@@ -79,9 +79,7 @@ function Main({ cards }: MainPageProps): React.JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {cards.map((card: Card) => (
-                <PlaceCard key={card.id} card={card}></PlaceCard>
-              ))}
+              <Offers cards={cards} />
             </div>
           </section>
           <div className="cities__right-section">
