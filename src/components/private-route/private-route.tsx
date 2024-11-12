@@ -1,9 +1,10 @@
 import {Navigate} from 'react-router-dom';
-import { AuthorizationStatusType, AuthorizationStatus, Routing } from '../../lib/types/types';
 import React from 'react';
+import { TAuthorizationStatus, AuthorizationStatus } from '../../lib/types/authorization';
+import { Routing } from '../../lib/types/routing';
 
 type PrivateRouteProps = {
-  authorizationStatus: AuthorizationStatusType;
+  authorizationStatus: TAuthorizationStatus;
   children: React.JSX.Element;
 }
 
