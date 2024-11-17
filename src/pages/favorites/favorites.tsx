@@ -34,7 +34,8 @@ function Favorites({ offers }: FavoritesProps): React.JSX.Element {
                       <PlaceOffer
                         key={card.id}
                         card={card}
-                        isFavorite
+                        isSmall
+                        className='favorites'
                       />
                     ))}
                 </div>

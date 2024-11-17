@@ -8,9 +8,11 @@ import { OfferCardType } from '../../lib/types/offer-card';
 import useMap from '../../hooks/use-map';
 
 type MapProps = {
+  className: string;
   centerOffer: OfferCardType;
   offers: OfferCardType [];
-  selectedOfferId: number;
+  selectedOfferId?: number;
+  height?: number;
 };
 
 const defaultCustomIcon = new Icon({
@@ -26,7 +28,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): React.JSX.Element {
-  const {centerOffer, offers, selectedOfferId} = props;
+  const {className, centerOffer, offers, selectedOfferId, height} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, centerOffer);
@@ -59,7 +61,11 @@ function Map(props: MapProps): React.JSX.Element {
   }, [map, offers, selectedOfferId]);
 
   return (
-    <section className={clsx(styles.map, 'cities__map', 'map')} ref={mapRef} />
+    <section
+      className={clsx(styles.map, className, 'map')}
+      ref={mapRef}
+      style={{height: height && `${height }px`}}
+    />
   );
 }
 

@@ -8,7 +8,7 @@ export const OFFERS: OfferCardType[] = [
     previewImage: 'img/apartment-01.jpg',
     price: 120,
     isFavorite: false,
-    rating: 80,
+    rating: 4,
     title: 'Beautiful & luxurious apartment at great location',
     type: Place.Apartment,
     city: {
@@ -26,7 +26,7 @@ export const OFFERS: OfferCardType[] = [
     previewImage: 'img/room.jpg',
     price: 80,
     isFavorite: true,
-    rating: 80,
+    rating: 4,
     title: 'Wood and stone place',
     type: Place.Private,
     city: {
@@ -44,7 +44,7 @@ export const OFFERS: OfferCardType[] = [
     previewImage: 'img/apartment-02.jpg',
     price: 132,
     isFavorite: false,
-    rating: 80,
+    rating: 4,
     title: 'Canal View Prinsengracht',
     type: Place.Apartment,
     city: {
@@ -62,7 +62,7 @@ export const OFFERS: OfferCardType[] = [
     previewImage: 'img/apartment-03.jpg',
     price: 180,
     isFavorite: false,
-    rating: 100,
+    rating: 5,
     title: 'Nice, cozy, warm big bed apartment',
     type: Place.Apartment,
     city: {
@@ -80,7 +80,7 @@ export const OFFERS: OfferCardType[] = [
     previewImage: 'img/room.jpg',
     price: 80,
     isFavorite: true,
-    rating: 80,
+    rating: 4,
     title: 'Wood and stone place',
     type: Place.Private,
     city: {
