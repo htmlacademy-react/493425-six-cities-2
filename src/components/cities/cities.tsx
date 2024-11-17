@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PlaceOffer from '../place-card/place-card';
 import { OfferCardType } from '../../lib/types/offer-card';
+import Map from '../map/map';
 
 type CitiesProps = {
   offers: OfferCardType[];
@@ -60,7 +61,7 @@ function Cities({ offers }: CitiesProps): React.JSX.Element {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map" />
+          <Map offers={offers} centerOffer={offers[2]} selectedOfferId={activeOfferId} />
         </div>
       </div>
     </div>

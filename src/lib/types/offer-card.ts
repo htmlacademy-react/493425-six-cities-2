@@ -13,7 +13,7 @@ export type OfferCardType = {
   title: string;
   type: PlaceType;
   city: CityType;
-  location?: OfferLocationType;
+  location: OfferLocationType;
 };
 
 export type OfferDetailType = OfferCardType & {
