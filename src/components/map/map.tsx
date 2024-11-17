@@ -45,7 +45,7 @@ function Map(props: MapProps): React.JSX.Element {
 
       marker
         .setIcon(
-          !Number.isNaN(selectedOfferId) && offer.id === selectedOfferId
+          offer.id === selectedOfferId
             ? currentCustomIcon
             : defaultCustomIcon
         )
