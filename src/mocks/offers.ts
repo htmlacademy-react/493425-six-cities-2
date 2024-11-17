@@ -1,7 +1,7 @@
-import { TOfferCard } from '../lib/types/offer-card';
+import { OfferCardType } from '../lib/types/offer-card';
 import { Place } from '../lib/types/place';
 
-export const OFFERS: TOfferCard[] = [
+export const OFFERS: OfferCardType[] = [
   {
     id: 0,
     isPremium: true,

@@ -4,4 +4,4 @@ export const AuthorizationStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
-export type TAuthorizationStatus = (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus];
+export type AuthorizationStatusType = (typeof AuthorizationStatus)[keyof typeof AuthorizationStatus];

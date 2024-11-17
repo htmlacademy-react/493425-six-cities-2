@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
-import { TReviewFormValue } from '../../lib/types/review-form-value';
+import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATINGS } from '../../const';
 
 type ReviewFormProps = {
-  onSubmitForm: (value: TReviewFormValue) => void;
+  onSubmitForm: (value: ReviewFormValueType) => void;
 };
 
 function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {

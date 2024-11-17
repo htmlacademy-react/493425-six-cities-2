@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
 import ReviewForm from '../../components/review-form/review-form';
-import { TReviewFormValue } from '../../lib/types/review-form-value';
+import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import { OFFERS } from '../../mocks/offers';
-import { TOfferCard } from '../../lib/types/offer-card';
+import { OfferCardType } from '../../lib/types/offer-card';
 
 function Offer(): React.JSX.Element {
   const { id } = useParams();
-  const cardInfo = OFFERS.find((card: TOfferCard) => card.id === Number(id)) as TOfferCard;
+  const cardInfo = OFFERS.find((card: OfferCardType) => card.id === Number(id)) as OfferCardType;
 
-  function handleSubmitReview(value: TReviewFormValue) {
+  function handleSubmitReview(value: ReviewFormValueType) {
     throw new Error(value.review);
   }
 

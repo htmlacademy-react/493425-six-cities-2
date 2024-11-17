@@ -1,6 +1,6 @@
-import { TRouting, Routing } from './lib/types/routing';
+import { RoutingType, Routing } from './lib/types/routing';
 
-export const LAYOUT_CLASSES: Record<TRouting, string[]> = {
+export const LAYOUT_CLASSES: Record<RoutingType, string[]> = {
   [Routing.Empty]: ['page--gray', 'page--main'],
   [Routing.Main]: ['page--gray', 'page--main'],
   [Routing.Favorites]: [],
@@ -9,7 +9,7 @@ export const LAYOUT_CLASSES: Record<TRouting, string[]> = {
   [Routing.NotFound]: ['page--gray']
 };
 
-export const SECTOR_MAIN_CLASSES: Record<TRouting, string[]> = {
+export const SECTOR_MAIN_CLASSES: Record<RoutingType, string[]> = {
   [Routing.Empty]: ['page__main--index'],
   [Routing.Main]: ['page__main--index'],
   [Routing.Favorites]: ['page__main--favorites'],

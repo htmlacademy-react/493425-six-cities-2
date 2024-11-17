@@ -7,4 +7,4 @@ export const Routing = {
   NotFound: '/not-found'
 } as const;
 
-export type TRouting = (typeof Routing)[keyof typeof Routing];
+export type RoutingType = (typeof Routing)[keyof typeof Routing];

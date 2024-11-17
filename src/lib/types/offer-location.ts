@@ -1,4 +1,4 @@
-export type TOfferLocation = {
+export type OfferLocationType = {
   latitude: number;
   longitude: number;
   zoom: number;

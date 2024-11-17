@@ -1,4 +1,4 @@
-export type TReviewFormValue = {
+export type ReviewFormValueType = {
   review: string;
   rating: string;
 };

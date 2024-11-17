@@ -1,9 +1,9 @@
-import { TCity } from './city';
-import { TOfferHost } from './offer-host';
-import { TOfferLocation } from './offer-location';
-import { TPlace } from './place';
+import { CityType } from './city';
+import { OfferHostType } from './offer-host';
+import { OfferLocationType } from './offer-location';
+import { PlaceType } from './place';
 
-export type TOfferCard = {
+export type OfferCardType = {
   id: number;
   isPremium: boolean;
   previewImage: string;
@@ -11,16 +11,16 @@ export type TOfferCard = {
   isFavorite: boolean;
   rating: number;
   title: string;
-  type: TPlace;
-  city: TCity;
-  location?: TOfferLocation;
+  type: PlaceType;
+  city: CityType;
+  location?: OfferLocationType;
 };
 
-export type TOfferDetail = TOfferCard & {
+export type OfferDetailType = OfferCardType & {
   description: string;
   bedrooms: number;
   goods: string[];
   images: string[];
   maxAdults: number;
-  host: TOfferHost;
+  host: OfferHostType;
 };
