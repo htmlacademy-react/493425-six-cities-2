@@ -18,7 +18,7 @@ export const SECTOR_MAIN_CLASSES: Record<TRouting, string[]> = {
   [Routing.NotFound]: ['page__main--index']
 };
 
-export const RATES: string[] = [
+export const RATINGS: string[] = [
   'perfect',
   'good',
   'not bad',

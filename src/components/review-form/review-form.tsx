@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { TReviewFormValue } from '../../lib/types/review-form-value';
-import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATES } from '../../const';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATINGS } from '../../const';
 
 type ReviewFormProps = {
   onSubmitForm: (value: TReviewFormValue) => void;
@@ -28,21 +28,23 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
     });
   }
 
+  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    onSubmitForm(value);
+  }
+
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        onSubmitForm(value);
-      }}
+      onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {RATES.map((title, i) => (
+        {RATINGS.map((title, i) => (
           <Fragment key={title}>
             <input
               className="form__rating-input visually-hidden"

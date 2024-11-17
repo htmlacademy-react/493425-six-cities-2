@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import PlaceOffer from '../place-card/place-card';
 import { TOfferCard } from '../../lib/types/offer-card';
 
@@ -7,15 +7,15 @@ type CitiesProps = {
 }
 
 function Cities({ offers }: CitiesProps): React.JSX.Element {
-  const activeOfferId = useRef(NaN);
+  const [activeOfferId, setActiveOfferId] = useState(NaN);
 
   function handleMouseEnter(card: TOfferCard) {
-    activeOfferId.current = card.id;
+    setActiveOfferId(card.id);
   }
 
   function handleMouseLeave(card: TOfferCard) {
-    if (activeOfferId.current === card.id) {
-      activeOfferId.current = NaN;
+    if (activeOfferId === card.id) {
+      setActiveOfferId(NaN);
     }
   }
 
