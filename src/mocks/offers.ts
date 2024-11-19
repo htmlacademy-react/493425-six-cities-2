@@ -1,7 +1,7 @@
-import { TOfferCard } from '../lib/types/offer-card';
+import { OfferCardType } from '../lib/types/offer-card';
 import { Place } from '../lib/types/place';
 
-export const OFFERS: TOfferCard[] = [
+export const OFFERS: OfferCardType[] = [
   {
     id: 0,
     isPremium: true,
@@ -9,10 +9,15 @@ export const OFFERS: TOfferCard[] = [
     price: 120,
     isFavorite: false,
     rating: 80,
-    title: 'Beautiful &amp; luxurious apartment at great location',
+    title: 'Beautiful & luxurious apartment at great location',
     type: Place.Apartment,
     city: {
-      name: 'Paris'
+      name: 'Amsterdam'
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
     }
   },
   {
@@ -25,7 +30,12 @@ export const OFFERS: TOfferCard[] = [
     title: 'Wood and stone place',
     type: Place.Private,
     city: {
-      name: 'Paris'
+      name: 'Amsterdam'
+    },
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 1
     }
   },
   {
@@ -38,7 +48,12 @@ export const OFFERS: TOfferCard[] = [
     title: 'Canal View Prinsengracht',
     type: Place.Apartment,
     city: {
-      name: 'Paris'
+      name: 'Amsterdam'
+    },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 1
     }
   },
   {
@@ -52,6 +67,11 @@ export const OFFERS: TOfferCard[] = [
     type: Place.Apartment,
     city: {
       name: 'Amsterdam'
+    },
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 1
     }
   },
   {
@@ -64,7 +84,12 @@ export const OFFERS: TOfferCard[] = [
     title: 'Wood and stone place',
     type: Place.Private,
     city: {
-      name: 'Brussels'
+      name: 'Amsterdam'
+    },
+    location: {
+      latitude: 52.3909554943508,
+      longitude: 4.939309666406198,
+      zoom: 1
     }
   }
 ];

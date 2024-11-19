@@ -1,6 +1,6 @@
-import { TOfferLocation } from './offer-location';
+import { OfferLocationType } from './offer-location';
 
-export type TCity = {
+export type CityType = {
   name: string;
-  location?: TOfferLocation;
+  location?: OfferLocationType;
 };

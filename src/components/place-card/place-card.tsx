@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { TOfferCard } from '../../lib/types/offer-card';
+import { OfferCardType } from '../../lib/types/offer-card';
 import { Routing } from '../../lib/types/routing';
 
 type PlaceOfferProps = {
-  card: TOfferCard;
-  onMouseEnter?: (card: TOfferCard) => void;
-  onMouseLeave?: (card: TOfferCard) => void;
+  card: OfferCardType;
+  onMouseEnter?: (card: OfferCardType) => void;
+  onMouseLeave?: (card: OfferCardType) => void;
   isFavorite?: boolean;
 }
 

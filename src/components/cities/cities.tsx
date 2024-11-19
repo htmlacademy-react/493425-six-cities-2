@@ -1,21 +1,22 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import PlaceOffer from '../place-card/place-card';
-import { TOfferCard } from '../../lib/types/offer-card';
+import { OfferCardType } from '../../lib/types/offer-card';
+import Map from '../map/map';
 
 type CitiesProps = {
-  offers: TOfferCard[];
+  offers: OfferCardType[];
 }
 
 function Cities({ offers }: CitiesProps): React.JSX.Element {
-  const activeOfferId = useRef(NaN);
+  const [activeOfferId, setActiveOfferId] = useState(NaN);
 
-  function handleMouseEnter(card: TOfferCard) {
-    activeOfferId.current = card.id;
+  function handleMouseEnter(card: OfferCardType) {
+    setActiveOfferId(card.id);
   }
 
-  function handleMouseLeave(card: TOfferCard) {
-    if (activeOfferId.current === card.id) {
-      activeOfferId.current = NaN;
+  function handleMouseLeave(card: OfferCardType) {
+    if (activeOfferId === card.id) {
+      setActiveOfferId(NaN);
     }
   }
 
@@ -49,7 +50,7 @@ function Cities({ offers }: CitiesProps): React.JSX.Element {
             </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
-            {offers.map((card: TOfferCard) => (
+            {offers.map((card: OfferCardType) => (
               <PlaceOffer
                 key={card.id}
                 card={card}
@@ -60,7 +61,7 @@ function Cities({ offers }: CitiesProps): React.JSX.Element {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map" />
+          <Map offers={offers} centerOffer={offers[2]} selectedOfferId={activeOfferId} />
         </div>
       </div>
     </div>
