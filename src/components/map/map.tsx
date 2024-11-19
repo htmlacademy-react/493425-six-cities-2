@@ -28,10 +28,18 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): React.JSX.Element {
-  const {className, centerOffer, offers, selectedOfferId, height} = props;
+  const {className, centerOffer, offers, selectedOfferId, height = 500} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, centerOffer);
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    map.setView([centerOffer.location.latitude, centerOffer.location.longitude], centerOffer.location.zoom);
+  }, [map, centerOffer]);
 
   useEffect(() => {
     if (!map) {
