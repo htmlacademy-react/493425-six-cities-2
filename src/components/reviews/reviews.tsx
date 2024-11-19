@@ -1,4 +1,5 @@
 import { ReviewType } from '../../lib/types/review';
+import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import ReviewForm from '../review-form/review-form';
 import Review from '../review/review';
 
@@ -7,8 +8,8 @@ type ReviewsProp = {
 }
 
 function Reviews({ reviews }: ReviewsProp): React.JSX.Element {
-  function handleSubmitReview() {
-
+  function handleSubmitReview(value: ReviewFormValueType) {
+    return value;
   }
 
   return (
