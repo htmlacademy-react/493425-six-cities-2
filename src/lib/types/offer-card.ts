@@ -3,7 +3,7 @@ import { OfferHostType } from './offer-host';
 import { OfferLocationType } from './offer-location';
 import { PlaceType } from './place';
 
-export type OfferCardType = {
+export type PlaceOfferType = {
   id: number;
   isPremium: boolean;
   previewImage: string;
@@ -16,7 +16,7 @@ export type OfferCardType = {
   location: OfferLocationType;
 };
 
-export type OfferDetailType = OfferCardType & {
+export type OfferDetailType = PlaceOfferType & {
   description: string;
   bedrooms: number;
   goods: string[];

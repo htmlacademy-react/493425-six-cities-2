@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import PlaceOffer from '../place-card/place-card';
-import { OfferCardType } from '../../lib/types/offer-card';
+import PlaceOffer from '../place-offer/place-offer';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 import clsx from 'clsx';
 
 
 type CitiesProps = {
-  offers: OfferCardType[];
+  offers: PlaceOfferType[];
   changeActiveOfferId: (id: number) => void;
   classNames?: string[];
   offerClassName?: string;
@@ -13,30 +12,17 @@ type CitiesProps = {
 }
 
 function Cities({ offers, changeActiveOfferId, classNames, isSmall, offerClassName }: CitiesProps): React.JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState(NaN);
-
-  useEffect(() => {
-    changeActiveOfferId(activeOfferId);
-  }, [activeOfferId, changeActiveOfferId]);
-
-  function handleMouseEnter(card: OfferCardType) {
-    setActiveOfferId(card.id);
-  }
-
-  function handleMouseLeave(card: OfferCardType) {
-    if (activeOfferId === card.id) {
-      setActiveOfferId(NaN);
-    }
+  function handleMouseEnterLeave(id: number) {
+    changeActiveOfferId(id);
   }
 
   return (
     <div className={clsx(classNames)}>
-      {offers.map((card: OfferCardType) => (
+      {offers.map((card: PlaceOfferType) => (
         <PlaceOffer
           key={card.id}
           card={card}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnterLeave={handleMouseEnterLeave}
           className={offerClassName}
           isSmall={isSmall}
         />

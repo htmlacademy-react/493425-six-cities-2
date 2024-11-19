@@ -1,12 +1,10 @@
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { OfferCardType } from '../lib/types/offer-card';
+import { PlaceOfferType } from '../lib/types/offer-card';
 import { ATTRIBUTION_COPY, LAYER_URL } from '../const';
 
-function useMap(
-  mapRef: MutableRefObject<HTMLElement | null>,
-  offer: OfferCardType
-): Map | null {
+function useMap(offer: PlaceOfferType): [Map | null, MutableRefObject<HTMLElement | null>] {
+  const mapRef = useRef(null);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
@@ -30,9 +28,14 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef]);
+  }, [
+    mapRef,
+    offer.location.latitude,
+    offer.location.longitude,
+    offer.location.zoom
+  ]);
 
-  return map;
+  return [map, mapRef];
 }
 
 export default useMap;

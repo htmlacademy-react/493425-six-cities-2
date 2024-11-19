@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { OFFERS } from '../../mocks/offers';
-import { OfferCardType } from '../../lib/types/offer-card';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 import Reviews from '../../components/reviews/reviews';
 import Map from '../../components/map/map';
 import Cities from '../../components/cities/cities';
@@ -11,7 +11,7 @@ import { REVIEWS } from '../../mocks/reviews';
 function Offer(): React.JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState(NaN);
   const { id } = useParams();
-  const cardInfo = OFFERS.find((card: OfferCardType) => card.id === Number(id)) as OfferCardType;
+  const cardInfo = OFFERS.find((card: PlaceOfferType) => card.id === Number(id)) as PlaceOfferType;
   const points = OFFERS.slice(0, 3);
   const nearPlaceClasses = [
     'near-places__list',

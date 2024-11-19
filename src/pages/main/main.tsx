@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Cities from '../../components/cities/cities';
-import { OfferCardType } from '../../lib/types/offer-card';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 import Map from '../../components/map/map';
 import { useState } from 'react';
 
 type MainPageProps = {
-  offers: OfferCardType[];
+  offers: PlaceOfferType[];
 }
 
 function Main({ offers }: MainPageProps): React.JSX.Element {
