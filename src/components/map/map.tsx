@@ -27,9 +27,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): React.JSX.Element {
-  const {className, centerOffer, offers, selectedOfferId, height = 500} = props;
-
+function Map({className, centerOffer, offers, selectedOfferId, height = 500}: MapProps): React.JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, centerOffer);
 
