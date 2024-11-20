@@ -10,12 +10,15 @@ function useMap(offer: PlaceOfferType): [Map | null, MutableRefObject<HTMLElemen
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
+      const center = offer && {
+        lat: offer.location.latitude,
+        lng: offer.location.longitude
+      };
+      const zoom = offer && offer.location.zoom;
+
       const instance = new Map(mapRef.current, {
-        center: {
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
-        },
-        zoom: offer.location.zoom
+        center,
+        zoom
       });
 
       const layer = new TileLayer(
@@ -30,9 +33,9 @@ function useMap(offer: PlaceOfferType): [Map | null, MutableRefObject<HTMLElemen
     }
   }, [
     mapRef,
-    offer.location.latitude,
-    offer.location.longitude,
-    offer.location.zoom
+    offer?.location.latitude,
+    offer?.location.longitude,
+    offer?.location.zoom
   ]);
 
   return [map, mapRef];

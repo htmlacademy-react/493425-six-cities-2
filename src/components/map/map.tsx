@@ -31,7 +31,7 @@ function Map({className, centerOffer, offers, selectedOfferId, height}: MapProps
   const [map, mapRef] = useMap(centerOffer);
 
   useEffect(() => {
-    if (!map) {
+    if (!map || !centerOffer) {
       return;
     }
 

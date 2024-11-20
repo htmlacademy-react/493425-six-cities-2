@@ -1,33 +1,36 @@
-import PlaceOffer from '../place-offer/place-offer';
-import { PlaceOfferType } from '../../lib/types/offer-card';
 import clsx from 'clsx';
-
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { setCity } from '../../store/action';
 
 type CitiesProps = {
-  offers: PlaceOfferType[];
-  changeActiveOfferId: (id: number) => void;
-  classNames?: string[];
-  offerClassName?: string;
-  isSmall?: boolean;
+  cities: string[];
+  activeCity: string;
 }
 
-function Cities({ offers, changeActiveOfferId, classNames, isSmall, offerClassName }: CitiesProps): React.JSX.Element {
-  function handleMouseEnterLeave(id: number) {
-    changeActiveOfferId(id);
-  }
+function Cities({ cities, activeCity }: CitiesProps): React.JSX.Element {
+  const dispatch = useAppDispatch();
 
   return (
-    <div className={clsx(classNames)}>
-      {offers.map((card: PlaceOfferType) => (
-        <PlaceOffer
-          key={card.id}
-          card={card}
-          onMouseEnterLeave={handleMouseEnterLeave}
-          className={offerClassName}
-          isSmall={isSmall}
-        />
+    <ul className="locations__list tabs__list">
+      {cities.map((city: string) => (
+        <li key={city} className="locations__item">
+          <Link
+            to='#'
+            className={clsx(
+              'locations__item-link',
+              'tabs__item',
+              {'tabs__item--active': city === activeCity}
+            )}
+            onClick={() => {
+              dispatch(setCity(city));
+            }}
+          >
+            <span>{city}</span>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
