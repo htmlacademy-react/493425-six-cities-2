@@ -8,11 +8,11 @@ import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthorizationStatus } from '../../lib/types/authorization';
-import { OfferCardType } from '../../lib/types/offer-card';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 import { Routing } from '../../lib/types/routing';
 
 type AppProps = {
-  offers: OfferCardType[];
+  offers: PlaceOfferType[];
 }
 
 function App({offers}: AppProps): React.JSX.Element {

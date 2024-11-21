@@ -1,16 +1,18 @@
 import 'leaflet/dist/leaflet.css';
 import styles from './map.module.css';
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import { Icon, layerGroup, Marker } from 'leaflet';
-import { OfferCardType } from '../../lib/types/offer-card';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 import useMap from '../../hooks/use-map';
 
 type MapProps = {
-  centerOffer: OfferCardType;
-  offers: OfferCardType [];
-  selectedOfferId: number;
+  className: string;
+  centerOffer: PlaceOfferType;
+  offers: PlaceOfferType [];
+  selectedOfferId?: number;
+  height?: number;
 };
 
 const defaultCustomIcon = new Icon({
@@ -25,11 +27,16 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map(props: MapProps): React.JSX.Element {
-  const {centerOffer, offers, selectedOfferId} = props;
+function Map({className, centerOffer, offers, selectedOfferId, height}: MapProps): React.JSX.Element {
+  const [map, mapRef] = useMap(centerOffer);
 
-  const mapRef = useRef(null);
-  const map = useMap(mapRef, centerOffer);
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    map.setView([centerOffer.location.latitude, centerOffer.location.longitude], centerOffer.location.zoom);
+  }, [map, centerOffer]);
 
   useEffect(() => {
     if (!map) {
@@ -37,7 +44,7 @@ function Map(props: MapProps): React.JSX.Element {
     }
 
     const markerLayer = layerGroup().addTo(map);
-    offers.forEach((offer: OfferCardType) => {
+    offers.forEach((offer: PlaceOfferType) => {
       const marker = new Marker({
         lat: offer.location.latitude,
         lng: offer.location.longitude
@@ -59,7 +66,11 @@ function Map(props: MapProps): React.JSX.Element {
   }, [map, offers, selectedOfferId]);
 
   return (
-    <section className={clsx(styles.map, 'cities__map', 'map')} ref={mapRef} />
+    <section
+      className={clsx(styles.map, className, 'map')}
+      ref={mapRef}
+      style={{height: height && `${height }px`}}
+    />
   );
 }
 
