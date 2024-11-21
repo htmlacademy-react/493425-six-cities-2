@@ -23,7 +23,10 @@ function Main(): React.JSX.Element {
   useEffect(() => {
     const newOffers = getCityOffers(activeCity, OFFERS);
     dispatch(setCityOffers(newOffers));
-  }, [activeCity]);
+  }, [
+    dispatch,
+    activeCity
+  ]);
 
   return (
     <>
