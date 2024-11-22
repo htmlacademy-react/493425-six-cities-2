@@ -65,7 +65,11 @@ function Map({className, center, offers, selectedOfferId, height}: MapProps): Re
       map.removeLayer(markerLayer);
     };
 
-  }, [map, offers, selectedOfferId]);
+  }, [
+    map,
+    offers,
+    selectedOfferId
+  ]);
 
   return (
     <section
