@@ -1,21 +1,24 @@
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { PlaceOfferType } from '../lib/types/offer-card';
 import { ATTRIBUTION_COPY, LAYER_URL } from '../const';
+import { OfferLocationType } from '../lib/types/offer-location';
 
-function useMap(offer: PlaceOfferType): [Map | null, MutableRefObject<HTMLElement | null>] {
+function useMap(center: OfferLocationType): [Map | null, MutableRefObject<HTMLElement | null>] {
+  const { latitude, longitude, zoom } = center || {};
   const mapRef = useRef(null);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
+      const centerMap = {
+        lat: latitude,
+        lng: longitude
+      };
+
       const instance = new Map(mapRef.current, {
-        center: {
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
-        },
-        zoom: offer.location.zoom
+        center: centerMap,
+        zoom
       });
 
       const layer = new TileLayer(
@@ -30,9 +33,9 @@ function useMap(offer: PlaceOfferType): [Map | null, MutableRefObject<HTMLElemen
     }
   }, [
     mapRef,
-    offer.location.latitude,
-    offer.location.longitude,
-    offer.location.zoom
+    latitude,
+    longitude,
+    zoom
   ]);
 
   return [map, mapRef];

@@ -21,7 +21,7 @@ function App({offers}: AppProps): React.JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route path={Routing.Main} element={<Layout />}>
-            <Route index element={<Main offers={offers} />} />
+            <Route index element={<Main />} />
             <Route path={Routing.Login} element={<Login />} />
             <Route path={Routing.Favorites} element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>

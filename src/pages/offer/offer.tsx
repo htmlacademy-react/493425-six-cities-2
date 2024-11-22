@@ -4,7 +4,7 @@ import { OFFERS } from '../../mocks/offers';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import Reviews from '../../components/reviews/reviews';
 import Map from '../../components/map/map';
-import Cities from '../../components/cities/cities';
+import Offers from '../../components/offers/offers';
 import { useState } from 'react';
 import { REVIEWS } from '../../mocks/reviews';
 
@@ -166,7 +166,7 @@ function Offer(): React.JSX.Element {
           <h2 className="near-places__title">
             Other places in the neighbourhood
           </h2>
-          <Cities
+          <Offers
             offers={points}
             changeActiveOfferId={setActiveOfferId}
             classNames={nearPlaceClasses}
