@@ -2,10 +2,11 @@ import 'leaflet/dist/leaflet.css';
 import styles from './map.module.css';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../const';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import useMap from '../../hooks/use-map';
+import markerIcon from '../../../public/img/pin.svg';
+import markerIconActive from '../../../public/img/pin-active.svg';
 import { OfferLocationType } from '../../lib/types/offer-location';
 
 type MapProps = {
@@ -17,13 +18,13 @@ type MapProps = {
 };
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: markerIcon,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
 
 const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
+  iconUrl: markerIconActive,
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
