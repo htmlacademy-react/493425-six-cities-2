@@ -29,6 +29,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map({className, center, offers, selectedOfferId, height}: MapProps): React.JSX.Element {
+  const { latitude, longitude, zoom } = center || {};
   const [map, mapRef] = useMap(center);
 
   useEffect(() => {
@@ -36,8 +37,13 @@ function Map({className, center, offers, selectedOfferId, height}: MapProps): Re
       return;
     }
 
-    map.setView([center.latitude, center.longitude], center.zoom);
-  }, [map, center]);
+    map.setView([latitude, longitude], zoom);
+  }, [
+    map,
+    latitude,
+    longitude,
+    zoom
+  ]);
 
   useEffect(() => {
     if (!map) {
