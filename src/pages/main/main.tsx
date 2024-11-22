@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import Offers from '../../components/offers/offers';
 import Map from '../../components/map/map';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Cities from '../../components/cities/cities';
 import { CITIES } from '../../mocks/cities';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -12,7 +12,6 @@ import OfferSorting from '../../components/offer-sorting/offer-sorting';
 import { sortOffers } from '../../utils/sort-offers';
 
 function Main(): React.JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState(NaN);
   const offersClasses = [
     'cities__places-list',
     'places__list',
@@ -51,7 +50,6 @@ function Main(): React.JSX.Element {
             <OfferSorting />
             <Offers
               offers={offers}
-              changeActiveOfferId={setActiveOfferId}
               classNames={offersClasses}
               offerClassName='cities'
             />
@@ -61,7 +59,6 @@ function Main(): React.JSX.Element {
               className='cities__map'
               offers={offers}
               center={offers[0]?.location}
-              selectedOfferId={activeOfferId}
             />
           </div>
         </div>

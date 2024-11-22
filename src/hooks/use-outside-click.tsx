@@ -15,7 +15,7 @@ export function useOutsideClick(initialIsVisible: boolean) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref]);
+  }, []);
 
   return { ref, isVisible, setIsVisible };
 }

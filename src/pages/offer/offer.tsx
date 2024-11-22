@@ -5,13 +5,11 @@ import { PlaceOfferType } from '../../lib/types/offer-card';
 import Reviews from '../../components/reviews/reviews';
 import Map from '../../components/map/map';
 import Offers from '../../components/offers/offers';
-import { useState } from 'react';
 import { REVIEWS } from '../../mocks/reviews';
 
 function Offer(): React.JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState(NaN);
   const { id } = useParams();
-  const cardInfo = OFFERS.find((card: PlaceOfferType) => card.id === Number(id)) as PlaceOfferType;
+  const cardInfo = OFFERS.find((card: PlaceOfferType) => card.id === id) as PlaceOfferType;
   const points = OFFERS.slice(0, 3);
   const nearPlaceClasses = [
     'near-places__list',
@@ -156,8 +154,7 @@ function Offer(): React.JSX.Element {
         <Map
           className='offer__map'
           offers={points}
-          selectedOfferId={activeOfferId}
-          centerOffer={points[0]}
+          center={points[0]?.location}
           height={579}
         />
       </section>
@@ -168,7 +165,6 @@ function Offer(): React.JSX.Element {
           </h2>
           <Offers
             offers={points}
-            changeActiveOfferId={setActiveOfferId}
             classNames={nearPlaceClasses}
             offerClassName='near-places'
           />

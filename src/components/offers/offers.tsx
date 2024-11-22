@@ -1,19 +1,20 @@
 import PlaceOffer from '../place-offer/place-offer';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import clsx from 'clsx';
-
+import { useAppDispatch } from '../../hooks';
+import { setActiveOfferId } from '../../store/action';
 
 type OffersProps = {
   offers: PlaceOfferType[];
-  changeActiveOfferId: (id: number) => void;
   classNames?: string[];
   offerClassName?: string;
   isSmall?: boolean;
 }
 
-function Offers({ offers, changeActiveOfferId, classNames, isSmall, offerClassName }: OffersProps): React.JSX.Element {
-  function handleMouseEnterLeave(id: number) {
-    changeActiveOfferId(id);
+function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps): React.JSX.Element {
+  const dispatch = useAppDispatch();
+  function handleMouseEnterLeave(id: string) {
+    dispatch(setActiveOfferId(id));
   }
 
   return (
