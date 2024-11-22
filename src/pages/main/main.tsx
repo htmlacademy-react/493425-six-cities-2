@@ -60,7 +60,7 @@ function Main(): React.JSX.Element {
             <Map
               className='cities__map'
               offers={offers}
-              centerOffer={offers[0]}
+              center={offers[0].location}
               selectedOfferId={activeOfferId}
             />
           </div>

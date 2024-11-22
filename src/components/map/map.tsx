@@ -7,10 +7,11 @@ import { PlaceOfferType } from '../../lib/types/offer-card';
 import useMap from '../../hooks/use-map';
 import markerIcon from '../../../public/img/pin.svg';
 import markerIconActive from '../../../public/img/pin-active.svg';
+import { OfferLocationType } from '../../lib/types/offer-location';
 
 type MapProps = {
   className: string;
-  centerOffer: PlaceOfferType;
+  center: OfferLocationType;
   offers: PlaceOfferType [];
   selectedOfferId?: number;
   height?: number;
@@ -28,16 +29,16 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({className, centerOffer, offers, selectedOfferId, height}: MapProps): React.JSX.Element {
-  const [map, mapRef] = useMap(centerOffer);
+function Map({className, center, offers, selectedOfferId, height}: MapProps): React.JSX.Element {
+  const [map, mapRef] = useMap(center);
 
   useEffect(() => {
-    if (!map || !centerOffer) {
+    if (!map || !center) {
       return;
     }
 
-    map.setView([centerOffer.location.latitude, centerOffer.location.longitude], centerOffer.location.zoom);
-  }, [map, centerOffer]);
+    map.setView([center.latitude, center.longitude], center.zoom);
+  }, [map, center]);
 
   useEffect(() => {
     if (!map) {
