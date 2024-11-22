@@ -4,17 +4,17 @@ import { ATTRIBUTION_COPY, LAYER_URL } from '../const';
 import { OfferLocationType } from '../lib/types/offer-location';
 
 function useMap(center: OfferLocationType): [Map | null, MutableRefObject<HTMLElement | null>] {
+  const { latitude, longitude, zoom } = center || {};
   const mapRef = useRef(null);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
-      const centerMap = center && {
-        lat: center.latitude,
-        lng: center.longitude
+      const centerMap = {
+        lat: latitude,
+        lng: longitude
       };
-      const zoom = center && center.zoom;
 
       const instance = new Map(mapRef.current, {
         center: centerMap,
@@ -31,7 +31,12 @@ function useMap(center: OfferLocationType): [Map | null, MutableRefObject<HTMLEl
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [ mapRef, center ]);
+  }, [
+    mapRef,
+    latitude,
+    longitude,
+    zoom
+  ]);
 
   return [map, mapRef];
 }
