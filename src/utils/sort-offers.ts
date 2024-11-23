@@ -1,7 +1,7 @@
 import { PlaceOfferType } from '../lib/types/offer-card';
 import { Sorting, SortingType } from '../lib/types/sorting';
 
-export const sortOffers = (sorting: SortingType, offers: PlaceOfferType[]) => {
+export function sortOffers(sorting: SortingType, offers: PlaceOfferType[]) {
   const newOffers = offers.concat();
   switch(sorting) {
     case Sorting.PriceHigh:
