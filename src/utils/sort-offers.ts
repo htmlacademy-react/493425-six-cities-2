@@ -14,4 +14,4 @@ export function sortOffers(sorting: SortingType, offers: PlaceOfferType[]) {
     default:
       return newOffers;
   }
-};
+}

@@ -1,5 +1,4 @@
 export const Routing = {
-  Empty: '',
   Main: '/',
   Login: '/login',
   Favorites: '/favorites',
