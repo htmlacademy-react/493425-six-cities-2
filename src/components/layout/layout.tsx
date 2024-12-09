@@ -7,20 +7,26 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import { RoutingType, Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
+import { MoonLoader } from 'react-spinners';
+
+import styles from './layout.module.css';
 
 function Layout (): React.JSX.Element {
   const pathname = useBasePath() as RoutingType;
   const layoutClasses = LAYOUT_CLASSES[pathname];
   const mainClasses = SECTOR_MAIN_CLASSES[pathname];
   const isFooterExist = pathname === Routing.Favorites;
-  const offersLenth = useAppSelector((state) => state.offersLength);
+  const offersLenth = useAppSelector((state) => state.cityOffersLength);
   const emptyMainClass = pathname === Routing.Main && !offersLenth && EMPTY_OFFERS_CLASS;
+
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
   return (
     <div className={clsx('page', layoutClasses)}>
       <Header />
       <main className={clsx('page__main', mainClasses, emptyMainClass)}>
-        <Outlet />
+        <MoonLoader loading={isOffersLoading} className={styles.spinner} />
+        {!isOffersLoading && <Outlet />}
       </main>
       {isFooterExist && <Footer />}
     </div>

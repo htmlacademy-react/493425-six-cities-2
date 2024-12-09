@@ -1,5 +1,14 @@
 import { RoutingType, Routing } from './lib/types/routing';
 
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+];
+
 export const LAYOUT_CLASSES: Record<RoutingType, string[]> = {
   [Routing.Main]: ['page--gray', 'page--main'],
   [Routing.Favorites]: [],
@@ -31,3 +40,9 @@ export const MAX_COMMENT_LENGTH = 300;
 
 export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 export const ATTRIBUTION_COPY = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+export const APIRoute = {
+  Offers: '/offers',
+  Login: '/login',
+  Logout: '/logout'
+} as const;

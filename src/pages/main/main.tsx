@@ -1,29 +1,28 @@
 import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Cities from '../../components/cities/cities';
-import { CITIES } from '../../mocks/cities';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { OFFERS } from '../../mocks/offers';
+import { useAppSelector } from '../../hooks';
 import { getCityOffers } from '../../utils/get-city-offers';
-import { setCityOffers } from '../../store/action';
 import { sortOffers } from '../../utils/sort-offers';
 import CitiesStay from '../../components/cities-stay/cities-stay';
 import CitiesStayEmpty from '../../components/cities-stay-empty/cities-stay-empty';
 import clsx from 'clsx';
+import { PlaceOfferType } from '../../lib/types/offer-card';
+import { CITIES } from '../../const';
 
 function Main(): React.JSX.Element {
+  const [cityOffers, setCityOffers] = useState<PlaceOfferType[]>([]);
   const activeCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
   const sorting = useAppSelector((state) => state.sorting);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const newOffers = sortOffers(sorting, getCityOffers(activeCity, OFFERS));
-    dispatch(setCityOffers(newOffers));
+    const newOffers = sortOffers(sorting, getCityOffers(activeCity, offers));
+    setCityOffers(newOffers);
   }, [
-    dispatch,
     activeCity,
-    sorting
+    sorting,
+    offers
   ]);
 
   return (
@@ -40,12 +39,12 @@ function Main(): React.JSX.Element {
       <div className="cities">
         <div className={clsx(
           'cities__places-container',
-          { 'cities__places-container--empty': !offers.length },
+          { 'cities__places-container--empty': !cityOffers.length },
           'container'
         )}
         >
-          {offers.length
-            ? <CitiesStay activeCity={activeCity} offers={offers} />
+          {cityOffers.length
+            ? <CitiesStay activeCity={activeCity} offers={cityOffers} />
             : <CitiesStayEmpty activeCity={activeCity} />}
         </div>
       </div>

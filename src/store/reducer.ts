@@ -1,36 +1,43 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveOfferId, setCity, setCityOffers, setSorting } from './action';
-import { OFFERS } from '../mocks/offers';
+import { loadOffers, setActiveOfferId, setCity, setOffersLoadingStatus, setSorting } from './action';
 import { Sorting, SortingType } from '../lib/types/sorting';
 import { PlaceOfferType } from '../lib/types/offer-card';
 
 const initialState: {
   city: string;
+  cityOffers: PlaceOfferType[];
   offers: PlaceOfferType[];
-  offersLength: number;
+  isOffersLoading: boolean;
+  cityOffersLength: number;
   sorting: SortingType;
   activeOfferId: string;
 } = {
   city: 'Paris',
-  offers: OFFERS,
-  offersLength: OFFERS.length,
+  cityOffers: [],
+  offers: [],
+  isOffersLoading: false,
+  cityOffersLength: 0,
   sorting: Sorting.Popular,
   activeOfferId: ''
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.cityOffersLength = state.offers.filter((o: PlaceOfferType) => o.city.name === state.city).length;
+    })
     .addCase(setCity, (state, action) => {
       state.city = action.payload;
-    })
-    .addCase(setCityOffers, (state, action) => {
-      state.offers = action.payload;
-      state.offersLength = action.payload.length;
+      state.cityOffersLength = state.offers.filter((o: PlaceOfferType) => o.city.name === state.city).length;
     })
     .addCase(setSorting, (state, action) => {
       state.sorting = action.payload;
     })
     .addCase(setActiveOfferId, (state, action) => {
       state.activeOfferId = action.payload;
+    })
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
     });
 });
