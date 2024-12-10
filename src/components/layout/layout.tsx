@@ -7,9 +7,6 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import { RoutingType, Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
-import { MoonLoader } from 'react-spinners';
-
-import styles from './layout.module.css';
 
 function Layout (): React.JSX.Element {
   const pathname = useBasePath() as RoutingType;
@@ -19,14 +16,11 @@ function Layout (): React.JSX.Element {
   const offersLenth = useAppSelector((state) => state.cityOffersLength);
   const emptyMainClass = pathname === Routing.Main && !offersLenth && EMPTY_OFFERS_CLASS;
 
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
-
   return (
     <div className={clsx('page', layoutClasses)}>
       <Header />
       <main className={clsx('page__main', mainClasses, emptyMainClass)}>
-        <MoonLoader loading={isOffersLoading} className={styles.spinner} />
-        {!isOffersLoading && <Outlet />}
+        <Outlet />
       </main>
       {isFooterExist && <Footer />}
     </div>
