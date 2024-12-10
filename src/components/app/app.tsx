@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Layout from '../layout/layout';
 import Offer from '../../pages/offer/offer';
@@ -7,28 +7,25 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { AuthorizationStatus } from '../../lib/types/authorization';
 import { Routing } from '../../lib/types/routing';
 
 function App(): React.JSX.Element {
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path={Routing.Main} element={<Layout />}>
-            <Route index element={<Main />} />
-            <Route path={Routing.Login} element={<Login />} />
-            <Route path={Routing.Favorites} element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Favorites offers={[]} />
-              </PrivateRoute>
-            }
-            />
-            <Route path={`${Routing.Offer}/:id`} element={<Offer />} />
-            <Route path='*' element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path={Routing.Main} element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path={Routing.Login} element={<Login />} />
+          <Route path={Routing.Favorites} element={
+            <PrivateRoute>
+              <Favorites offers={[]} />
+            </PrivateRoute>
+          }
+          />
+          <Route path={`${Routing.Offer}/:id`} element={<Offer />} />
+          <Route path='*' element={<NotFound />} />
+        </Route>
+      </Routes>
     </HelmetProvider>
   );
 }

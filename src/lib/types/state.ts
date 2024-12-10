@@ -5,5 +5,6 @@ export type AppDispatchType = typeof store.dispatch;
 
 export const NameSpace = {
   Offers: 'OFFERS',
-  Offer: 'OFFER'
+  Offer: 'OFFER',
+  User: 'USER'
 } as const;

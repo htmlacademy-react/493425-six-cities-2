@@ -1,11 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, setActiveOfferId, setCity, setOffersLoadingStatus, setSorting } from './action';
+import { loadOffers, requireAuthorization, setActiveOfferId, setCity, setOffersLoadingStatus, setSorting } from './action';
 import { Sorting, SortingType } from '../lib/types/sorting';
 import { PlaceOfferType } from '../lib/types/offer-card';
 import { StateType } from '../lib/types/state';
 import { WritableDraft } from 'immer';
 import { getCityOffers } from '../utils/get-city-offers';
 import { sortOffers } from '../utils/sort-offers';
+import { AuthorizationStatus, AuthorizationStatusType } from '../lib/types/authorization';
 
 function setCityOffersData(state: WritableDraft<StateType>): void {
   state.cityOffers = sortOffers(state.sorting, getCityOffers(state.city, state.offers));
@@ -20,6 +21,7 @@ const initialState: {
   cityOffersLength: number;
   sorting: SortingType;
   activeOfferId: string;
+  authorizationStatus: AuthorizationStatusType;
 } = {
   city: 'Paris',
   cityOffers: [],
@@ -27,7 +29,8 @@ const initialState: {
   isOffersLoading: false,
   cityOffersLength: 0,
   sorting: Sorting.Popular,
-  activeOfferId: ''
+  activeOfferId: '',
+  authorizationStatus: AuthorizationStatus.Unknown
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -49,5 +52,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
