@@ -1,5 +1,10 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../lib/types/authorization';
+import { OfferDetailType } from '../../lib/types/offer-card';
 import { ReviewType } from '../../lib/types/review';
 import { ReviewFormValueType } from '../../lib/types/review-form-value';
+import { ReviewRequestType } from '../../lib/types/review-request';
+import { uploadOfferReviewAction } from '../../store/api-actions';
 import ReviewForm from '../review-form/review-form';
 import Review from '../review/review';
 
@@ -8,8 +13,18 @@ type ReviewsProp = {
 }
 
 function Reviews({ reviews }: ReviewsProp): React.JSX.Element {
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector((state) => state.offer);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
   function handleSubmitReview(value: ReviewFormValueType) {
-    return value;
+    const uploadedReview: ReviewRequestType = {
+      comment: value.review,
+      rating: Number(value.rating),
+      offerId: (offer as OfferDetailType).id
+    };
+    dispatch(uploadOfferReviewAction(uploadedReview));
   }
 
   return (
@@ -20,7 +35,7 @@ function Reviews({ reviews }: ReviewsProp): React.JSX.Element {
       <ul className="reviews__list">
         {reviews.map((r: ReviewType) => <Review key={r.id} review={r} />)}
       </ul>
-      <ReviewForm onSubmitForm={handleSubmitReview} />
+      {isUserAuthorized && <ReviewForm onSubmitForm={handleSubmitReview} />}
     </section>
   );
 }

@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { setCity } from '../../store/action';
+import { redirectToRoute, setCity } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
 
@@ -15,7 +15,6 @@ function Login(): React.JSX.Element {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const fieldName = e.target.name;
@@ -41,7 +40,7 @@ function Login(): React.JSX.Element {
   function handleLinkClick(e: React.MouseEvent<HTMLElement>) {
     e.preventDefault();
     dispatch(setCity('Amsterdam'));
-    navigate(Routing.Main);
+    dispatch(redirectToRoute(Routing.Main));
   }
 
   return (

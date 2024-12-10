@@ -1,12 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, requireAuthorization, setActiveOfferId, setCity, setOffersLoadingStatus, setSorting } from './action';
+import { addOfferReview, clearOffer, clearUser, loadOffers, requireAuthorization, setActiveOfferId, setCity, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setSorting, setUser } from './action';
 import { Sorting, SortingType } from '../lib/types/sorting';
-import { PlaceOfferType } from '../lib/types/offer-card';
+import { OfferDetailType, PlaceOfferType } from '../lib/types/offer-card';
 import { StateType } from '../lib/types/state';
 import { WritableDraft } from 'immer';
 import { getCityOffers } from '../utils/get-city-offers';
 import { sortOffers } from '../utils/sort-offers';
 import { AuthorizationStatus, AuthorizationStatusType } from '../lib/types/authorization';
+import { ReviewType } from '../lib/types/review';
+import { UserDataType } from '../lib/types/user-data';
 
 function setCityOffersData(state: WritableDraft<StateType>): void {
   state.cityOffers = sortOffers(state.sorting, getCityOffers(state.city, state.offers));
@@ -14,6 +16,7 @@ function setCityOffersData(state: WritableDraft<StateType>): void {
 }
 
 const initialState: {
+  user: UserDataType | null;
   city: string;
   cityOffers: PlaceOfferType[];
   offers: PlaceOfferType[];
@@ -21,8 +24,12 @@ const initialState: {
   cityOffersLength: number;
   sorting: SortingType;
   activeOfferId: string;
+  offer: OfferDetailType | null;
+  offerNearPlaces: PlaceOfferType[];
+  offerReviews: ReviewType[];
   authorizationStatus: AuthorizationStatusType;
 } = {
+  user: null,
   city: 'Paris',
   cityOffers: [],
   offers: [],
@@ -30,11 +37,20 @@ const initialState: {
   cityOffersLength: 0,
   sorting: Sorting.Popular,
   activeOfferId: '',
+  offer: null,
+  offerNearPlaces: [],
+  offerReviews: [],
   authorizationStatus: AuthorizationStatus.Unknown
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
+    })
+    .addCase(clearUser, (state) => {
+      state.user = null;
+    })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
       setCityOffersData(state);
@@ -55,5 +71,22 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setOfferNearPlaces, (state, action) => {
+      state.offerNearPlaces = action.payload;
+    })
+    .addCase(setOfferReviews, (state, action) => {
+      state.offerReviews = action.payload;
+    })
+    .addCase(addOfferReview, (state, action) => {
+      state.offerReviews = state.offerReviews.concat(action.payload);
+    })
+    .addCase(clearOffer, (state) => {
+      state.offer = null;
+      state.offerNearPlaces = [];
+      state.offerReviews = [];
     });
 });

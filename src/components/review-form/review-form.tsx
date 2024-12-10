@@ -2,15 +2,17 @@ import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATINGS } from '../../const';
 
+const EMPTY_FORM = {
+  review: '',
+  rating: ''
+};
+
 type ReviewFormProps = {
   onSubmitForm: (value: ReviewFormValueType) => void;
 };
 
 function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
-  const [value, setValue] = useState({
-    review: '',
-    rating: ''
-  });
+  const [value, setValue] = useState<ReviewFormValueType>(EMPTY_FORM);
 
   const isValid = value.rating !== ''
     && value.review.length > MIN_COMMENT_LENGTH
@@ -31,6 +33,7 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
   function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     onSubmitForm(value);
+    setValue(EMPTY_FORM);
   }
 
   return (

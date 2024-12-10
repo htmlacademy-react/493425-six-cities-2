@@ -43,6 +43,7 @@ export const ATTRIBUTION_COPY = '&copy; <a href="https://www.openstreetmap.org/c
 
 export const APIRoute = {
   Offers: '/offers',
+  Comments: '/comments',
   Login: '/login',
   Logout: '/logout'
 } as const;

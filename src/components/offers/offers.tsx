@@ -21,7 +21,7 @@ function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps): R
     <div className={clsx(classNames)}>
       {offers.map((card: PlaceOfferType) => (
         <PlaceOffer
-          key={card.id}
+          key={card?.id}
           card={card}
           onMouseEnterLeave={handleMouseEnterLeave}
           className={offerClassName}
