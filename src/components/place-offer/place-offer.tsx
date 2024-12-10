@@ -5,7 +5,7 @@ import { Routing } from '../../lib/types/routing';
 
 type PlaceOfferProps = {
   card: PlaceOfferType;
-  onMouseEnterLeave?: (id: number) => void;
+  onMouseEnterLeave?: (id: string) => void;
   className?: string;
   isSmall?: boolean;
 }
@@ -15,7 +15,7 @@ function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferP
     <article
       className={clsx(className && `${className }__card`, 'place-card')}
       onMouseEnter={() => onMouseEnterLeave && onMouseEnterLeave(card.id)}
-      onMouseLeave={() => onMouseEnterLeave && onMouseEnterLeave(NaN)}
+      onMouseLeave={() => onMouseEnterLeave && onMouseEnterLeave('')}
     >
       {card.isPremium &&
         <div className="place-card__mark">

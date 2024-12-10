@@ -3,7 +3,7 @@ import { Place } from '../lib/types/place';
 
 export const OFFERS: PlaceOfferType[] = [
   {
-    id: 0,
+    id: '0',
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
@@ -21,7 +21,7 @@ export const OFFERS: PlaceOfferType[] = [
     }
   },
   {
-    id: 1,
+    id: '1',
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
@@ -39,7 +39,7 @@ export const OFFERS: PlaceOfferType[] = [
     }
   },
   {
-    id: 2,
+    id: '2',
     isPremium: false,
     previewImage: 'img/apartment-02.jpg',
     price: 132,
@@ -57,7 +57,7 @@ export const OFFERS: PlaceOfferType[] = [
     }
   },
   {
-    id: 3,
+    id: '3',
     isPremium: true,
     previewImage: 'img/apartment-03.jpg',
     price: 180,
@@ -75,7 +75,7 @@ export const OFFERS: PlaceOfferType[] = [
     }
   },
   {
-    id: 4,
+    id: '4',
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,

@@ -4,7 +4,7 @@ import { OfferLocationType } from './offer-location';
 import { PlaceType } from './place';
 
 export type PlaceOfferType = {
-  id: number;
+  id: string;
   isPremium: boolean;
   previewImage: string;
   price: number;

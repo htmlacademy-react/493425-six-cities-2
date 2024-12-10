@@ -8,12 +8,12 @@ import useMap from '../../hooks/use-map';
 import markerIcon from '../../../public/img/pin.svg';
 import markerIconActive from '../../../public/img/pin-active.svg';
 import { OfferLocationType } from '../../lib/types/offer-location';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
   className: string;
   center: OfferLocationType;
   offers: PlaceOfferType [];
-  selectedOfferId?: number;
   height?: number;
 };
 
@@ -29,18 +29,21 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({className, center, offers, selectedOfferId, height}: MapProps): React.JSX.Element {
+function Map({className, center, offers, height}: MapProps): React.JSX.Element {
   const { latitude, longitude, zoom } = center || {};
   const [map, mapRef] = useMap(center);
+  const activeOfferId = useAppSelector((state) => state.activeOfferId);
+  const noCenter = !center;
 
   useEffect(() => {
-    if (!map || !center) {
+    if (!map || noCenter) {
       return;
     }
 
     map.setView([latitude, longitude], zoom);
   }, [
     map,
+    noCenter,
     latitude,
     longitude,
     zoom
@@ -60,7 +63,7 @@ function Map({className, center, offers, selectedOfferId, height}: MapProps): Re
 
       marker
         .setIcon(
-          offer.id === selectedOfferId
+          offer.id === activeOfferId
             ? currentCustomIcon
             : defaultCustomIcon
         )
@@ -74,7 +77,7 @@ function Map({className, center, offers, selectedOfferId, height}: MapProps): Re
   }, [
     map,
     offers,
-    selectedOfferId
+    activeOfferId
   ]);
 
   return (
