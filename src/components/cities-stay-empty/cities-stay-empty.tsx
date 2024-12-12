@@ -1,8 +1,8 @@
-type CitiesStayEmptyProps = {
-  activeCity: string;
-}
+import { useAppSelector } from "../../hooks";
 
-function CitiesStayEmpty({ activeCity }: CitiesStayEmptyProps) {
+function CitiesStayEmpty() {
+  const activeCity = useAppSelector((state) => state.city);
+
   return (
     <>
       <section className="cities__no-places">

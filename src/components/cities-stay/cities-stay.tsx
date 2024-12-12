@@ -1,4 +1,5 @@
-import { PlaceOfferType } from '../../lib/types/offer-card';
+import { useAppSelector } from '../../hooks';
+import { selectCityOffers } from '../../store/selectors';
 import Map from '../map/map';
 import OfferSorting from '../offer-sorting/offer-sorting';
 import Offers from '../offers/offers';
@@ -9,12 +10,10 @@ const OFFERS_CLASSES = [
   'tabs__content'
 ];
 
-type CitiesStayProps = {
-  offers: PlaceOfferType[];
-  activeCity: string;
-}
+function CitiesStay() {
+  const offers = useAppSelector(selectCityOffers);
+  const activeCity = useAppSelector((state) => state.city);
 
-function CitiesStay({ offers, activeCity }: CitiesStayProps) {
   return (
     <>
       <section className="cities__places places">

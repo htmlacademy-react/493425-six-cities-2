@@ -8,10 +8,11 @@ import { CITIES } from '../../const';
 import { MoonLoader } from 'react-spinners';
 
 import styles from './main.module.css';
+import { selectCityOffers } from '../../store/selectors';
 
 function Main() {
   const activeCity = useAppSelector((state) => state.city);
-  const cityOffers = useAppSelector((state) => state.cityOffers);
+  const cityOffersLength = useAppSelector(selectCityOffers).length;
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
   return (
@@ -30,13 +31,13 @@ function Main() {
         <div className="cities">
           <div className={clsx(
             'cities__places-container',
-            { 'cities__places-container--empty': !cityOffers.length },
+            { 'cities__places-container--empty': !cityOffersLength },
             'container'
           )}
           >
-            {cityOffers.length
-              ? <CitiesStay activeCity={activeCity} offers={cityOffers} />
-              : <CitiesStayEmpty activeCity={activeCity} />}
+            {cityOffersLength
+              ? <CitiesStay />
+              : <CitiesStayEmpty />}
           </div>
         </div>}
     </>

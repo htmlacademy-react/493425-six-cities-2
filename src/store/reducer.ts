@@ -2,27 +2,16 @@ import { createReducer } from '@reduxjs/toolkit';
 import { addOfferReview, clearOffer, clearUser, loadOffers, requireAuthorization, setActiveOfferId, setAuthorizationError, setCity, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setSorting, setUser } from './action';
 import { Sorting, SortingType } from '../lib/types/sorting';
 import { OfferDetailType, PlaceOfferType } from '../lib/types/offer-card';
-import { StateType } from '../lib/types/state';
-import { WritableDraft } from 'immer';
-import { getCityOffers } from '../utils/get-city-offers';
-import { sortOffers } from '../utils/sort-offers';
 import { AuthorizationStatus, AuthorizationStatusType } from '../lib/types/authorization';
 import { ReviewType } from '../lib/types/review';
 import { UserDataType } from '../lib/types/user-data';
 import { AuthorizationErrorType } from '../lib/types/authorization-error';
 
-const setCityOffersData = (state: WritableDraft<StateType>): void => {
-  state.cityOffers = sortOffers(state.sorting, getCityOffers(state.city, state.offers));
-  state.cityOffersLength = state.cityOffers.length;
-};
-
 const initialState: {
   user: UserDataType | null;
   city: string;
-  cityOffers: PlaceOfferType[];
   offers: PlaceOfferType[];
   isOffersLoading: boolean;
-  cityOffersLength: number;
   sorting: SortingType;
   activeOfferId: string;
   offer: OfferDetailType | null;
@@ -33,10 +22,8 @@ const initialState: {
 } = {
   user: null,
   city: 'Paris',
-  cityOffers: [],
   offers: [],
   isOffersLoading: false,
-  cityOffersLength: 0,
   sorting: Sorting.Popular,
   activeOfferId: '',
   offer: null,
@@ -56,15 +43,12 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
-      setCityOffersData(state);
     })
     .addCase(setCity, (state, action) => {
       state.city = action.payload;
-      setCityOffersData(state);
     })
     .addCase(setSorting, (state, action) => {
       state.sorting = action.payload;
-      setCityOffersData(state);
     })
     .addCase(setActiveOfferId, (state, action) => {
       state.activeOfferId = action.payload;
