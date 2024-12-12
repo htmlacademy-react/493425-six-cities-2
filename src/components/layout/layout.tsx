@@ -8,7 +8,7 @@ import Footer from '../footer/footer';
 import { RoutingType, Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
 
-function Layout (): React.JSX.Element {
+function Layout () {
   const pathname = useBasePath() as RoutingType;
   const layoutClasses = LAYOUT_CLASSES[pathname];
   const mainClasses = SECTOR_MAIN_CLASSES[pathname];

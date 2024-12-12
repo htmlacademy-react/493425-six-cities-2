@@ -4,15 +4,15 @@ import { Sorting, SortingType } from '../../lib/types/sorting';
 import { setSorting } from '../../store/action';
 import { useOutsideClick } from '../../hooks/use-outside-click';
 
-function OfferSorting(): React.JSX.Element {
+function OfferSorting() {
   const { ref, isVisible, setIsVisible } = useOutsideClick(false);
   const sorting = useAppSelector((state) => state.sorting);
   const dispatch = useAppDispatch();
 
-  function setCurrentSorting(s: SortingType) {
+  const setCurrentSorting = (s: SortingType) => {
     dispatch(setSorting(s));
     setIsVisible(false);
-  }
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">

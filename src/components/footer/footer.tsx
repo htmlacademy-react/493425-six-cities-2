@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Routing } from '../../lib/types/routing';
 
-function Footer(): React.JSX.Element {
+function Footer() {
   return (
     <footer className="footer container">
       <Link className="footer__logo-link" to={Routing.Main}>

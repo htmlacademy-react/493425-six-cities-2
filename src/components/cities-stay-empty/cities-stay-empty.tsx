@@ -2,7 +2,7 @@ type CitiesStayEmptyProps = {
   activeCity: string;
 }
 
-function CitiesStayEmpty({ activeCity }: CitiesStayEmptyProps): React.JSX.Element {
+function CitiesStayEmpty({ activeCity }: CitiesStayEmptyProps) {
   return (
     <>
       <section className="cities__no-places">

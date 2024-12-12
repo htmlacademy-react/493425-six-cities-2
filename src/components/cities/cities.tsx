@@ -8,7 +8,7 @@ type CitiesProps = {
   activeCity: string;
 }
 
-function Cities({ cities, activeCity }: CitiesProps): React.JSX.Element {
+function Cities({ cities, activeCity }: CitiesProps) {
   const dispatch = useAppDispatch();
 
   return (

@@ -9,7 +9,7 @@ import { clearOffer } from '../../store/action';
 import { fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
 import { getRandomItems } from '../../utils/get-random-items';
 
-function Offer(): React.JSX.Element {
+function Offer() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const cardInfo = useAppSelector((state) => state.offer);

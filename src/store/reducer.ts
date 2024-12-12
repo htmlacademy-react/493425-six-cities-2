@@ -10,10 +10,10 @@ import { AuthorizationStatus, AuthorizationStatusType } from '../lib/types/autho
 import { ReviewType } from '../lib/types/review';
 import { UserDataType } from '../lib/types/user-data';
 
-function setCityOffersData(state: WritableDraft<StateType>): void {
+const setCityOffersData = (state: WritableDraft<StateType>): void => {
   state.cityOffers = sortOffers(state.sorting, getCityOffers(state.city, state.offers));
   state.cityOffersLength = state.cityOffers.length;
-}
+};
 
 const initialState: {
   user: UserDataType | null;

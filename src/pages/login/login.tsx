@@ -7,7 +7,7 @@ import { redirectToRoute, setCity } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
 
-function Login(): React.JSX.Element {
+function Login() {
   const [state, setState] = useState<AuthInfoType>({
     email: '',
     password: ''
@@ -16,7 +16,7 @@ function Login(): React.JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
     const newState = {
@@ -27,21 +27,21 @@ function Login(): React.JSX.Element {
     setState(newState);
     const isNotEmptyInputs = Object.values(newState).every((value: string) => value.trim());
     setIsValid(isNotEmptyInputs && e.target.validity.valid);
-  }
+  };
 
-  function handleSubmit(evt: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (isValid) {
       dispatch(loginAction(state));
     }
-  }
+  };
 
-  function handleLinkClick(e: React.MouseEvent<HTMLElement>) {
+  const handleLinkClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(setCity('Amsterdam'));
     dispatch(redirectToRoute(Routing.Main));
-  }
+  };
 
   return (
     <>

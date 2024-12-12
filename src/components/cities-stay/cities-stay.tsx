@@ -14,7 +14,7 @@ type CitiesStayProps = {
   activeCity: string;
 }
 
-function CitiesStay({ offers, activeCity }: CitiesStayProps): React.JSX.Element {
+function CitiesStay({ offers, activeCity }: CitiesStayProps) {
   return (
     <>
       <section className="cities__places places">

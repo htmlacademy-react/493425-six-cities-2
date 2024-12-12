@@ -12,20 +12,20 @@ type ReviewsProp = {
   reviews: ReviewType[];
 }
 
-function Reviews({ reviews }: ReviewsProp): React.JSX.Element {
+function Reviews({ reviews }: ReviewsProp) {
   const dispatch = useAppDispatch();
   const offer = useAppSelector((state) => state.offer);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
-  function handleSubmitReview(value: ReviewFormValueType) {
+  const handleSubmitReview = (value: ReviewFormValueType) => {
     const uploadedReview: ReviewRequestType = {
       comment: value.review,
       rating: Number(value.rating),
       offerId: (offer as OfferDetailType).id
     };
     dispatch(uploadOfferReviewAction(uploadedReview));
-  }
+  };
 
   return (
     <section className="offer__reviews reviews">

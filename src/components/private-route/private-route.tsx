@@ -5,7 +5,7 @@ import { Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
 
 type PrivateRouteProps = {
-  children: React.JSX.Element;
+  children;
 }
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {

@@ -5,19 +5,19 @@ import { AuthorizationStatus } from '../../lib/types/authorization';
 import { useBasePath } from '../../hooks/use-base-path';
 import { logoutAction } from '../../store/api-actions';
 
-function Header(): React.JSX.Element {
+function Header() {
   const pathname = useBasePath() as RoutingType;
   const isLoginPage = pathname === Routing.Login;
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
-  function handleLinkClick(e: React.MouseEvent<HTMLElement>) {
+  const handleLinkClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logoutAction());
-  }
+  };
 
-  function getUserLink(isAuthorized: boolean): React.JSX.Element {
+  const getUserLink = (isAuthorized: boolean) => {
     if (isAuthorized) {
       return (
         <Link className="header__nav-link header__nav-link--profile" to={Routing.Favorites}>
@@ -37,7 +37,7 @@ function Header(): React.JSX.Element {
         <span className="header__login">Sign in</span>
       </Link>
     );
-  }
+  };
 
   return (
     <header className="header">

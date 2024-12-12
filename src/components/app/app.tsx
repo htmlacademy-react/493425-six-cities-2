@@ -9,7 +9,7 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { Routing } from '../../lib/types/routing';
 
-function App(): React.JSX.Element {
+function App() {
   return (
     <HelmetProvider>
       <Routes>

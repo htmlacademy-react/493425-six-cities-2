@@ -11,14 +11,14 @@ type ReviewFormProps = {
   onSubmitForm: (value: ReviewFormValueType) => void;
 };
 
-function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
+function ReviewForm({onSubmitForm}: ReviewFormProps) {
   const [value, setValue] = useState<ReviewFormValueType>(EMPTY_FORM);
 
   const isValid = value.rating !== ''
     && value.review.length > MIN_COMMENT_LENGTH
     && value.review.length < MAX_COMMENT_LENGTH;
 
-  function handleFieldChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
+  const handleFieldChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
     const newValue = {
@@ -28,13 +28,13 @@ function ReviewForm({onSubmitForm}: ReviewFormProps): React.JSX.Element {
       ...value,
       ...newValue
     });
-  }
+  };
 
-  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmitForm(value);
     setValue(EMPTY_FORM);
-  }
+  };
 
   return (
     <form

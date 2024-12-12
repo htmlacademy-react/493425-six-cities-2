@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useEffect } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { PlaceOfferType } from '../../lib/types/offer-card';
-import useMap from '../../hooks/use-map';
+import { useMap } from '../../hooks/use-map';
 import markerIcon from '../../../public/img/pin.svg';
 import markerIconActive from '../../../public/img/pin-active.svg';
 import { OfferLocationType } from '../../lib/types/offer-location';
@@ -29,7 +29,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({className, center, offers, height}: MapProps): React.JSX.Element {
+function Map({className, center, offers, height}: MapProps) {
   const { latitude, longitude, zoom } = center || {};
   const [map, mapRef] = useMap(center);
   const activeOfferId = useAppSelector((state) => state.activeOfferId);

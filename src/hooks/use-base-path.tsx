@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
 /** Возвращает адрес роута без параметров */
-export function useBasePath(): string {
+export const useBasePath = (): string => {
   const location = useLocation();
   const params = useParams<Record<string, string>>();
   const basePath = Object.values(params)
@@ -11,4 +11,4 @@ export function useBasePath(): string {
     );
 
   return basePath || '';
-}
+};

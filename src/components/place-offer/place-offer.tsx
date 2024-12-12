@@ -10,7 +10,7 @@ type PlaceOfferProps = {
   isSmall?: boolean;
 }
 
-function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps): React.JSX.Element {
+function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps) {
   return (
     <article
       className={clsx(className && `${className }__card`, 'place-card')}

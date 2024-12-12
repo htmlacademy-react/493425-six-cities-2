@@ -11,11 +11,11 @@ type OffersProps = {
   isSmall?: boolean;
 }
 
-function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps): React.JSX.Element {
+function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps) {
   const dispatch = useAppDispatch();
-  function handleMouseEnterLeave(id: string) {
+  const handleMouseEnterLeave = (id: string) => {
     dispatch(setActiveOfferId(id));
-  }
+  };
 
   return (
     <div className={clsx(classNames)}>

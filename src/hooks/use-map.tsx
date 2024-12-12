@@ -3,7 +3,7 @@ import { Map, TileLayer } from 'leaflet';
 import { ATTRIBUTION_COPY, LAYER_URL } from '../const';
 import { OfferLocationType } from '../lib/types/offer-location';
 
-function useMap(center: OfferLocationType): [Map | null, MutableRefObject<HTMLElement | null>] {
+export const useMap = (center: OfferLocationType): [Map | null, MutableRefObject<HTMLElement | null>] => {
   const { latitude, longitude, zoom } = center || {};
   const mapRef = useRef(null);
   const [map, setMap] = useState<Map | null>(null);
@@ -39,6 +39,4 @@ function useMap(center: OfferLocationType): [Map | null, MutableRefObject<HTMLEl
   ]);
 
   return [map, mapRef];
-}
-
-export default useMap;
+};

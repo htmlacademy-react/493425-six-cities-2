@@ -9,7 +9,7 @@ import { MoonLoader } from 'react-spinners';
 
 import styles from './main.module.css';
 
-function Main(): React.JSX.Element {
+function Main() {
   const activeCity = useAppSelector((state) => state.city);
   const cityOffers = useAppSelector((state) => state.cityOffers);
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
