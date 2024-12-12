@@ -52,7 +52,8 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
             <input
               className="form__rating-input visually-hidden"
               name="rating"
-              defaultValue={i + 1}
+              value={i + 1}
+              checked={Number(value.rating) === i + 1}
               id={`${i + 1}-star`}
               type="radio"
               onChange={handleFieldChange}

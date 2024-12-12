@@ -1,8 +1,8 @@
-import {AxiosInstance} from 'axios';
+import {AxiosError, AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {APIRoute} from '../const';
 import { OfferDetailType, PlaceOfferType } from '../lib/types/offer-card';
-import { addOfferReview, clearUser, loadOffers, redirectToRoute, requireAuthorization, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setUser } from './action';
+import { addOfferReview, clearUser, loadOffers, redirectToRoute, requireAuthorization, setAuthorizationError, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setUser } from './action';
 import { AppDispatchType, NameSpace, StateType } from '../lib/types/state';
 import { AuthorizationStatus } from '../lib/types/authorization';
 import { AuthInfoType } from '../lib/types/auth-data';
@@ -11,6 +11,7 @@ import { dropToken, saveToken } from '../services/token';
 import { Routing } from '../lib/types/routing';
 import { ReviewType } from '../lib/types/review';
 import { ReviewRequestType } from '../lib/types/review-request';
+import { AuthorizationErrorType } from '../lib/types/authorization-error';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatchType;
@@ -101,11 +102,17 @@ export const loginAction = createAsyncThunk<void, AuthInfoType, {
 }>(
   `${NameSpace.User}/login`,
   async ({email, password}, {dispatch, extra: api}) => {
-    const {data: user} = await api.post<UserDataType>(APIRoute.Login, {email, password});
-    saveToken(user.token);
-    dispatch(setUser(user));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(Routing.Main));
+    try {
+      dispatch(setAuthorizationError(null));
+      const {data: user} = await api.post<UserDataType>(APIRoute.Login, {email, password});
+      saveToken(user.token);
+      dispatch(setUser(user));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(Routing.Main));
+    } catch (error) {
+      const authError = (error as AxiosError).response?.data;
+      dispatch(setAuthorizationError(authError as AuthorizationErrorType));
+    }
   },
 );
 

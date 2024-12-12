@@ -6,6 +6,7 @@ import { AuthorizationStatusType } from '../lib/types/authorization';
 import { RoutingType } from '../lib/types/routing';
 import { ReviewType } from '../lib/types/review';
 import { UserDataType } from '../lib/types/user-data';
+import { AuthorizationErrorType } from '../lib/types/authorization-error';
 
 export const setUser = createAction<UserDataType>(`${NameSpace.User}/setUser`);
 export const clearUser = createAction(`${NameSpace.User}/clearUser`);
@@ -15,6 +16,7 @@ export const setActiveOfferId = createAction<string>(`${NameSpace.Offer}/setActi
 export const loadOffers = createAction<PlaceOfferType[]>(`${NameSpace.Offer}/loadOffers`);
 export const setOffersLoadingStatus = createAction<boolean>(`${NameSpace.Offers}/setLoadingStatus`);
 export const requireAuthorization = createAction<AuthorizationStatusType>(`${NameSpace.User}/requireAuthorization`);
+export const setAuthorizationError = createAction<AuthorizationErrorType | null>(`${NameSpace.User}/setAuthorizationError`);
 export const redirectToRoute = createAction<RoutingType>(`${NameSpace.User}/redirectToRoute`);
 export const setOffer = createAction<OfferDetailType>(`${NameSpace.Offer}/setOffer`);
 export const clearOffer = createAction(`${NameSpace.Offer}/clearOffer`);

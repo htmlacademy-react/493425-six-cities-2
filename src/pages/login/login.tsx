@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { redirectToRoute, setCity } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
+import styles from './login.module.css';
 
 function Login() {
   const [state, setState] = useState<AuthInfoType>({
@@ -15,6 +16,7 @@ function Login() {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
+  const authorizationError = useAppSelector((state) => state.authorizationError?.details[0].messages[0]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -73,6 +75,7 @@ function Login() {
                 placeholder="Password"
                 required
               />
+              {authorizationError && <p className={styles.error}>{authorizationError}</p>}
             </div>
             <button disabled={!isValid} className="login__submit form__submit button" type="submit">
               Sign in

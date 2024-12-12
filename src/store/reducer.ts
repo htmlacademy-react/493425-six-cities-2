@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addOfferReview, clearOffer, clearUser, loadOffers, requireAuthorization, setActiveOfferId, setCity, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setSorting, setUser } from './action';
+import { addOfferReview, clearOffer, clearUser, loadOffers, requireAuthorization, setActiveOfferId, setAuthorizationError, setCity, setOffer, setOfferNearPlaces, setOfferReviews, setOffersLoadingStatus, setSorting, setUser } from './action';
 import { Sorting, SortingType } from '../lib/types/sorting';
 import { OfferDetailType, PlaceOfferType } from '../lib/types/offer-card';
 import { StateType } from '../lib/types/state';
@@ -9,6 +9,7 @@ import { sortOffers } from '../utils/sort-offers';
 import { AuthorizationStatus, AuthorizationStatusType } from '../lib/types/authorization';
 import { ReviewType } from '../lib/types/review';
 import { UserDataType } from '../lib/types/user-data';
+import { AuthorizationErrorType } from '../lib/types/authorization-error';
 
 const setCityOffersData = (state: WritableDraft<StateType>): void => {
   state.cityOffers = sortOffers(state.sorting, getCityOffers(state.city, state.offers));
@@ -28,6 +29,7 @@ const initialState: {
   offerNearPlaces: PlaceOfferType[];
   offerReviews: ReviewType[];
   authorizationStatus: AuthorizationStatusType;
+  authorizationError: AuthorizationErrorType | null;
 } = {
   user: null,
   city: 'Paris',
@@ -40,7 +42,8 @@ const initialState: {
   offer: null,
   offerNearPlaces: [],
   offerReviews: [],
-  authorizationStatus: AuthorizationStatus.Unknown
+  authorizationStatus: AuthorizationStatus.Unknown,
+  authorizationError: null
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -71,6 +74,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setAuthorizationError, (state, action) => {
+      state.authorizationError = action.payload;
     })
     .addCase(setOffer, (state, action) => {
       state.offer = action.payload;
