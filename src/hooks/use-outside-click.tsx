@@ -18,4 +18,4 @@ export const useOutsideClick = (initialIsVisible: boolean) => {
   }, []);
 
   return { ref, isVisible, setIsVisible };
-}
+};

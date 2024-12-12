@@ -16,7 +16,7 @@ function Login() {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const authorizationError = useAppSelector((state) => state.authorizationError?.details[0].messages[0]);
+  const authorizationError = useAppSelector((appState) => appState.authorizationError?.details[0].messages[0]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;

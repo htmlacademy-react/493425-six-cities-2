@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from '../../hooks';
 
 function CitiesStayEmpty() {
   const activeCity = useAppSelector((state) => state.city);

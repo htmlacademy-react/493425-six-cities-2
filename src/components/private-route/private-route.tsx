@@ -4,7 +4,7 @@ import { Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
 import { PropsWithChildren } from 'react';
 
-function PrivateRoute(props: PropsWithChildren<{}>) {
+function PrivateRoute(props: PropsWithChildren) {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const {children} = props;
   return (
