@@ -5,21 +5,23 @@ import Map from '../../components/map/map';
 import Offers from '../../components/offers/offers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { clearOffer } from '../../store/action';
 import { fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
-import { getRandomItems } from '../../utils/get-random-items';
+import { selectOffer, selectOfferReviews, selectRandomNearPlaces } from '../../store/offer-data/offer-data.selectors';
+import { clearOffer, setActiveOfferId } from '../../store/offer-data/offer-data';
+import { isEqual } from 'lodash';
 
 function Offer() {
   const { id } = useParams();
-  const dispatch = useAppDispatch();
-  const cardInfo = useAppSelector((state) => state.offer);
-  const reviews = useAppSelector((state) => state.offerReviews);
-  const allNearPlaces = useAppSelector((state) => state.offerNearPlaces);
-  const nearPlaces = getRandomItems(3, allNearPlaces);
+  const cardInfo = useAppSelector(selectOffer, isEqual);
+  const reviews = useAppSelector(selectOfferReviews, isEqual);
+  const nearPlaces = useAppSelector(selectRandomNearPlaces, isEqual);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) {
+      dispatch(setActiveOfferId(id));
       dispatch(fetchOfferAction(id));
       dispatch(fetchOfferReviewsAction(id));
       dispatch(fetchOfferNearPlacesAction(id));

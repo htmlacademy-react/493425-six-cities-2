@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import styles from './map.module.css';
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { useMap } from '../../hooks/use-map';
@@ -9,6 +9,7 @@ import markerIcon from '../../../public/img/pin.svg';
 import markerIconActive from '../../../public/img/pin-active.svg';
 import { OfferLocationType } from '../../lib/types/offer-location';
 import { useAppSelector } from '../../hooks';
+import { selectActiveOfferId } from '../../store/offer-data/offer-data.selectors';
 
 type MapProps = {
   className: string;
@@ -32,7 +33,7 @@ const currentCustomIcon = new Icon({
 function Map({className, center, offers, height}: MapProps) {
   const { latitude, longitude, zoom } = center || {};
   const [map, mapRef] = useMap(center);
-  const activeOfferId = useAppSelector((state) => state.activeOfferId);
+  const activeOfferId = useAppSelector(selectActiveOfferId);
   const noCenter = !center;
 
   useEffect(() => {
@@ -89,4 +90,5 @@ function Map({className, center, offers, height}: MapProps) {
   );
 }
 
-export default Map;
+const MemoMap = memo(Map);
+export default MemoMap;

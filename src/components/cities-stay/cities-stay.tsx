@@ -1,5 +1,6 @@
+import { isEqual } from 'lodash';
 import { useAppSelector } from '../../hooks';
-import { selectCityOffers } from '../../store/selectors';
+import { selectCity, selectCityOffers } from '../../store/offers-data/offers-data.selectors';
 import Map from '../map/map';
 import OfferSorting from '../offer-sorting/offer-sorting';
 import Offers from '../offers/offers';
@@ -11,8 +12,9 @@ const OFFERS_CLASSES = [
 ];
 
 function CitiesStay() {
-  const offers = useAppSelector(selectCityOffers);
-  const activeCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector(selectCityOffers, isEqual);
+  const center = offers[0]?.location;
+  const activeCity = useAppSelector(selectCity);
 
   return (
     <>
@@ -24,13 +26,14 @@ function CitiesStay() {
           offers={offers}
           classNames={OFFERS_CLASSES}
           offerClassName='cities'
+          useHover
         />
       </section>
       <div className="cities__right-section">
         <Map
           className='cities__map'
           offers={offers}
-          center={offers[0]?.location}
+          center={center}
         />
       </div>
     </>

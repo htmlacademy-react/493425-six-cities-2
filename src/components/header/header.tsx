@@ -5,11 +5,12 @@ import { AuthorizationStatus } from '../../lib/types/authorization';
 import { useBasePath } from '../../hooks/use-base-path';
 import { logoutAction } from '../../store/api-actions';
 import UserLink from './user-link/user-link';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 
 function Header() {
   const pathname = useBasePath() as RoutingType;
   const isLoginPage = pathname === Routing.Login;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 

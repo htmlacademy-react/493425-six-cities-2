@@ -3,10 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { redirectToRoute, setCity } from '../../store/action';
+import { redirectToRoute } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
 import styles from './login.module.css';
+import { selectAuthorizationError } from '../../store/user/user.selectors';
+import { setCity } from '../../store/offers-data/offers-data';
 
 function Login() {
   const [state, setState] = useState<AuthInfoType>({
@@ -16,7 +18,7 @@ function Login() {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const authorizationError = useAppSelector((appState) => appState.authorizationError?.details[0].messages[0]);
+  const authorizationError = useAppSelector(selectAuthorizationError);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;

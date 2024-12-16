@@ -1,19 +1,17 @@
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { setCity } from '../../store/action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { CITIES } from '../../const';
+import { selectCity } from '../../store/offers-data/offers-data.selectors';
+import { setCity } from '../../store/offers-data/offers-data';
 
-type CitiesProps = {
-  cities: string[];
-  activeCity: string;
-}
-
-function Cities({ cities, activeCity }: CitiesProps) {
+function Cities() {
+  const activeCity = useAppSelector(selectCity);
   const dispatch = useAppDispatch();
 
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city: string) => (
+      {CITIES.map((city: string) => (
         <li key={city} className="locations__item">
           <Link
             to='#'

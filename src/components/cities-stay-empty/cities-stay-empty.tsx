@@ -1,7 +1,8 @@
 import { useAppSelector } from '../../hooks';
+import { selectCity } from '../../store/offers-data/offers-data.selectors';
 
 function CitiesStayEmpty() {
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector(selectCity);
 
   return (
     <>

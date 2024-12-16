@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ReviewType } from '../../lib/types/review';
 
 type ReviewProp = {
@@ -37,4 +38,5 @@ function Review({ review }: ReviewProp) {
   );
 }
 
-export default Review;
+const MemoReview = memo(Review);
+export default MemoReview;

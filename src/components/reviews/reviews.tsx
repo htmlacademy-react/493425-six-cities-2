@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../lib/types/authorization';
 import { OfferDetailType } from '../../lib/types/offer-card';
@@ -7,6 +8,9 @@ import { ReviewRequestType } from '../../lib/types/review-request';
 import { uploadOfferReviewAction } from '../../store/api-actions';
 import ReviewForm from '../review-form/review-form';
 import Review from '../review/review';
+import { selectOffer } from '../../store/offer-data/offer-data.selectors';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { isEqual } from 'lodash';
 
 type ReviewsProp = {
   reviews: ReviewType[];
@@ -14,18 +18,18 @@ type ReviewsProp = {
 
 function Reviews({ reviews }: ReviewsProp) {
   const dispatch = useAppDispatch();
-  const offer = useAppSelector((state) => state.offer);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const offer = useAppSelector(selectOffer, isEqual);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
-  const handleSubmitReview = (value: ReviewFormValueType) => {
+  const handleSubmitReview = useCallback((value: ReviewFormValueType) => {
     const uploadedReview: ReviewRequestType = {
       comment: value.review,
       rating: Number(value.rating),
       offerId: (offer as OfferDetailType).id
     };
     dispatch(uploadOfferReviewAction(uploadedReview));
-  };
+  }, [dispatch, offer]);
 
   return (
     <section className="offer__reviews reviews">
@@ -40,4 +44,5 @@ function Reviews({ reviews }: ReviewsProp) {
   );
 }
 
-export default Reviews;
+const MemoReviews = memo(Reviews);
+export default MemoReviews;

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, memo, useState } from 'react';
 import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATINGS } from '../../const';
 
@@ -97,4 +97,5 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
   );
 }
 
-export default ReviewForm;
+const MemoReviewForm = memo(ReviewForm);
+export default MemoReviewForm;

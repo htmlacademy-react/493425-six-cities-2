@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Routing } from '../../../lib/types/routing';
 import { useAppSelector } from '../../../hooks';
+import { selectUser } from '../../../store/user/user.selectors';
+import { isEqual } from 'lodash';
 
 function UserLink() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector(selectUser, isEqual);
 
   if (user) {
     return (
