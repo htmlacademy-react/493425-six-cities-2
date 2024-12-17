@@ -3,9 +3,11 @@ import { Routing } from '../../../lib/types/routing';
 import { useAppSelector } from '../../../hooks';
 import { selectUser } from '../../../store/user/user.selectors';
 import { isEqual } from 'lodash';
+import { selectFavoriteOffers } from '../../../store/favorites-data/favorites-data.selectors';
 
 function UserLink() {
   const user = useAppSelector(selectUser, isEqual);
+  const favoriteOffersLength = useAppSelector(selectFavoriteOffers, isEqual).length;
 
   if (user) {
     return (
@@ -21,7 +23,7 @@ function UserLink() {
         <span className="header__user-name user__name">
           {user.email}
         </span>
-        <span className="header__favorite-count">3</span>
+        <span className="header__favorite-count">{favoriteOffersLength}</span>
       </Link>
     );
   }

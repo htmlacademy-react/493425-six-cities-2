@@ -10,7 +10,7 @@ export const redirect: Middleware<unknown, Reducer> =
   () =>
     (next) =>
       (action: PayloadAction<string>) => {
-        if (action.type === `${NameSpace.User}/redirectToRoute`) {
+        if (action.type === `${NameSpace.Navigation}/redirectToRoute`) {
           browserHistory.push(action.payload);
         }
 

@@ -3,6 +3,12 @@ import clsx from 'clsx';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { Routing } from '../../lib/types/routing';
 import { memo } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
+import { changeOfferFavoriteStatusAction } from '../../store/api-actions';
+import { useStore } from 'react-redux';
+import { NameSpace, StateType } from '../../lib/types/state';
+import { AnyAction, Store } from '@reduxjs/toolkit';
 
 type PlaceOfferProps = {
   card: PlaceOfferType;
@@ -12,6 +18,21 @@ type PlaceOfferProps = {
 }
 
 function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps) {
+  const store: Store<StateType, AnyAction> = useStore();
+  const dispatch = useAppDispatch();
+
+  const handleClickButtonFavorite = () => {
+    const user = store.getState()[NameSpace.User].user;
+    if (user) {
+      dispatch(changeOfferFavoriteStatusAction({
+        offerId: card.id,
+        status: card.isFavorite ? 0 : 1
+      }));
+    } else {
+      dispatch(redirectToRoute(Routing.Login));
+    }
+  };
+
   return (
     <article
       className={clsx(className && `${className }__card`, 'place-card')}
@@ -46,6 +67,7 @@ function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferP
               'button'
             )}
             type="button"
+            onClick={handleClickButtonFavorite}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />

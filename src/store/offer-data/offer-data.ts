@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { NameSpace, OfferDataType } from '../../lib/types/state';
-import { fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction, uploadOfferReviewAction } from '../api-actions';
+import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction, uploadOfferReviewAction } from '../api-actions';
 
 const initialState: OfferDataType = {
   activeOfferId: '',
@@ -36,6 +36,9 @@ export const offerData = createSlice({
       })
       .addCase(uploadOfferReviewAction.fulfilled, (state, action) => {
         state.offerReviews = state.offerReviews.concat(action.payload);
+      })
+      .addCase(changeOfferFavoriteStatusAction.fulfilled, (state, action) => {
+        state.offer = action.payload;
       });
   }
 });

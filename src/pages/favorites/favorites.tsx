@@ -2,12 +2,12 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import PlaceOffer from '../../components/place-offer/place-offer';
 import { PlaceOfferType } from '../../lib/types/offer-card';
+import { useAppSelector } from '../../hooks';
+import { isEqual } from 'lodash';
+import { selectFavoriteOffers } from '../../store/favorites-data/favorites-data.selectors';
 
-type FavoritesProps = {
-  offers: PlaceOfferType[];
-}
-
-function Favorites({ offers }: FavoritesProps) {
+function Favorites() {
+  const offers = useAppSelector(selectFavoriteOffers, isEqual);
   const cities = [...new Set(offers.map((card: PlaceOfferType) => card.city.name))];
   return (
     <>

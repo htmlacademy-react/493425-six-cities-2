@@ -10,7 +10,7 @@ function PrivateRoute(props: PropsWithChildren) {
   const {children} = props;
   return (
     authorizationStatus === AuthorizationStatus.Auth
-      ? children
+      ? children as JSX.Element
       : <Navigate to={Routing.Login} />
   );
 }

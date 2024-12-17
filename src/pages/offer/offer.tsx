@@ -5,19 +5,38 @@ import Map from '../../components/map/map';
 import Offers from '../../components/offers/offers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
+import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
 import { selectOffer, selectOfferReviews, selectRandomNearPlaces } from '../../store/offer-data/offer-data.selectors';
 import { clearOffer, setActiveOfferId } from '../../store/offer-data/offer-data';
 import { isEqual } from 'lodash';
+import { redirectToRoute } from '../../store/action';
+import { Routing } from '../../lib/types/routing';
+import clsx from 'clsx';
+import { Store, AnyAction } from '@reduxjs/toolkit';
+import { useStore } from 'react-redux';
+import { NameSpace, StateType } from '../../lib/types/state';
 
 function Offer() {
   const { id } = useParams();
+  const store: Store<StateType, AnyAction> = useStore();
   const cardInfo = useAppSelector(selectOffer, isEqual);
   const reviews = useAppSelector(selectOfferReviews, isEqual);
   const nearPlaces = useAppSelector(selectRandomNearPlaces, isEqual);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
 
   const dispatch = useAppDispatch();
+
+  const handleClickButtonFavorite = () => {
+    const user = store.getState()[NameSpace.User].user;
+    if (user && cardInfo) {
+      dispatch(changeOfferFavoriteStatusAction({
+        offerId: cardInfo.id,
+        status: cardInfo.isFavorite ? 0 : 1
+      }));
+    } else {
+      dispatch(redirectToRoute(Routing.Login));
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -69,7 +88,15 @@ function Offer() {
                   <h1 className="offer__name">
                     {cardInfo.title}
                   </h1>
-                  <button className="offer__bookmark-button button" type="button">
+                  <button
+                    className={clsx(
+                      'offer__bookmark-button',
+                      'button',
+                      {'offer__bookmark-button--active': cardInfo.isFavorite}
+                    )}
+                    type="button"
+                    onClick={handleClickButtonFavorite}
+                  >
                     <svg className="offer__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
                     </svg>
