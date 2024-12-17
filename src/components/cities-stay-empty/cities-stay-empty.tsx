@@ -1,8 +1,9 @@
-type CitiesStayEmptyProps = {
-  activeCity: string;
-}
+import { useAppSelector } from '../../hooks';
+import { selectCity } from '../../store/offers-data/offers-data.selectors';
 
-function CitiesStayEmpty({ activeCity }: CitiesStayEmptyProps): React.JSX.Element {
+function CitiesStayEmpty() {
+  const activeCity = useAppSelector(selectCity);
+
   return (
     <>
       <section className="cities__no-places">

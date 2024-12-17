@@ -4,15 +4,14 @@ import { useAppSelector } from '../../hooks';
 import CitiesStay from '../../components/cities-stay/cities-stay';
 import CitiesStayEmpty from '../../components/cities-stay-empty/cities-stay-empty';
 import clsx from 'clsx';
-import { CITIES } from '../../const';
 import { MoonLoader } from 'react-spinners';
-
 import styles from './main.module.css';
+import { selectCityOffers, selectIsOffersLoading } from '../../store/offers-data/offers-data.selectors';
+import { isEqual } from 'lodash';
 
-function Main(): React.JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
-  const cityOffers = useAppSelector((state) => state.cityOffers);
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+function Main() {
+  const cityOffersLength = useAppSelector(selectCityOffers, isEqual).length;
+  const isOffersLoading = useAppSelector(selectIsOffersLoading);
 
   return (
     <>
@@ -22,7 +21,7 @@ function Main(): React.JSX.Element {
       <h1 className="visually-hidden">Offers</h1>
       <div className="tabs">
         <section className="locations container">
-          <Cities activeCity={activeCity} cities={CITIES} />
+          <Cities />
         </section>
       </div>
       <MoonLoader loading={isOffersLoading} className={styles.spinner} />
@@ -30,13 +29,13 @@ function Main(): React.JSX.Element {
         <div className="cities">
           <div className={clsx(
             'cities__places-container',
-            { 'cities__places-container--empty': !cityOffers.length },
+            { 'cities__places-container--empty': !cityOffersLength },
             'container'
           )}
           >
-            {cityOffers.length
-              ? <CitiesStay activeCity={activeCity} offers={cityOffers} />
-              : <CitiesStayEmpty activeCity={activeCity} />}
+            {cityOffersLength
+              ? <CitiesStay />
+              : <CitiesStayEmpty />}
           </div>
         </div>}
     </>

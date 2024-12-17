@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from './not-found.module.css';
 import { Routing } from '../../lib/types/routing';
 
-function NotFound(): React.JSX.Element {
+function NotFound() {
   return (
     <div className={styles.notFound}>
       <Helmet>

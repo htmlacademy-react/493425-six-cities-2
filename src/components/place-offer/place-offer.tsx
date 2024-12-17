@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { Routing } from '../../lib/types/routing';
+import { memo } from 'react';
 
 type PlaceOfferProps = {
   card: PlaceOfferType;
@@ -10,12 +11,12 @@ type PlaceOfferProps = {
   isSmall?: boolean;
 }
 
-function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps): React.JSX.Element {
+function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps) {
   return (
     <article
       className={clsx(className && `${className }__card`, 'place-card')}
-      onMouseEnter={() => onMouseEnterLeave && onMouseEnterLeave(card.id)}
-      onMouseLeave={() => onMouseEnterLeave && onMouseEnterLeave('')}
+      onMouseEnter={() => onMouseEnterLeave?.(card.id)}
+      onMouseLeave={() => onMouseEnterLeave?.('')}
     >
       {card.isPremium &&
         <div className="place-card__mark">
@@ -67,4 +68,5 @@ function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferP
   );
 }
 
-export default PlaceOffer;
+const MemoPlaceOffer = memo(PlaceOffer);
+export default MemoPlaceOffer;

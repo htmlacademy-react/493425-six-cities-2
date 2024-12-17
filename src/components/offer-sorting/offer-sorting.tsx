@@ -1,18 +1,19 @@
 import clsx from 'clsx';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Sorting, SortingType } from '../../lib/types/sorting';
-import { setSorting } from '../../store/action';
 import { useOutsideClick } from '../../hooks/use-outside-click';
+import { selectSorting } from '../../store/offers-data/offers-data.selectors';
+import { setSorting } from '../../store/offers-data/offers-data';
 
-function OfferSorting(): React.JSX.Element {
+function OfferSorting() {
   const { ref, isVisible, setIsVisible } = useOutsideClick(false);
-  const sorting = useAppSelector((state) => state.sorting);
+  const sorting = useAppSelector(selectSorting);
   const dispatch = useAppDispatch();
 
-  function setCurrentSorting(s: SortingType) {
+  const setCurrentSorting = (s: SortingType) => {
     dispatch(setSorting(s));
     setIsVisible(false);
-  }
+  };
 
   return (
     <form className="places__sorting" action="#" method="get">

@@ -1,13 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { redirectToRoute, setCity } from '../../store/action';
+import { redirectToRoute } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
+import styles from './login.module.css';
+import { selectAuthorizationError } from '../../store/user/user.selectors';
+import { setCity } from '../../store/offers-data/offers-data';
 
-function Login(): React.JSX.Element {
+function Login() {
   const [state, setState] = useState<AuthInfoType>({
     email: '',
     password: ''
@@ -15,8 +18,9 @@ function Login(): React.JSX.Element {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
+  const authorizationError = useAppSelector(selectAuthorizationError);
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
     const newState = {
@@ -27,21 +31,21 @@ function Login(): React.JSX.Element {
     setState(newState);
     const isNotEmptyInputs = Object.values(newState).every((value: string) => value.trim());
     setIsValid(isNotEmptyInputs && e.target.validity.valid);
-  }
+  };
 
-  function handleSubmit(evt: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (isValid) {
       dispatch(loginAction(state));
     }
-  }
+  };
 
-  function handleLinkClick(e: React.MouseEvent<HTMLElement>) {
+  const handleLinkClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(setCity('Amsterdam'));
     dispatch(redirectToRoute(Routing.Main));
-  }
+  };
 
   return (
     <>
@@ -73,6 +77,7 @@ function Login(): React.JSX.Element {
                 placeholder="Password"
                 required
               />
+              {authorizationError && <p className={styles.error}>{authorizationError}</p>}
             </div>
             <button disabled={!isValid} className="login__submit form__submit button" type="submit">
               Sign in

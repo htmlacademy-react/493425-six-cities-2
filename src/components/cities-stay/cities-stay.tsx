@@ -1,4 +1,6 @@
-import { PlaceOfferType } from '../../lib/types/offer-card';
+import { isEqual } from 'lodash';
+import { useAppSelector } from '../../hooks';
+import { selectCity, selectCityOffers } from '../../store/offers-data/offers-data.selectors';
 import Map from '../map/map';
 import OfferSorting from '../offer-sorting/offer-sorting';
 import Offers from '../offers/offers';
@@ -9,12 +11,11 @@ const OFFERS_CLASSES = [
   'tabs__content'
 ];
 
-type CitiesStayProps = {
-  offers: PlaceOfferType[];
-  activeCity: string;
-}
+function CitiesStay() {
+  const offers = useAppSelector(selectCityOffers, isEqual);
+  const center = offers[0]?.location;
+  const activeCity = useAppSelector(selectCity);
 
-function CitiesStay({ offers, activeCity }: CitiesStayProps): React.JSX.Element {
   return (
     <>
       <section className="cities__places places">
@@ -25,13 +26,14 @@ function CitiesStay({ offers, activeCity }: CitiesStayProps): React.JSX.Element 
           offers={offers}
           classNames={OFFERS_CLASSES}
           offerClassName='cities'
+          useHover
         />
       </section>
       <div className="cities__right-section">
         <Map
           className='cities__map'
           offers={offers}
-          center={offers[0]?.location}
+          center={center}
         />
       </div>
     </>

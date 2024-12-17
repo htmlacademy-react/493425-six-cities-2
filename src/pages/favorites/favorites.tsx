@@ -7,7 +7,7 @@ type FavoritesProps = {
   offers: PlaceOfferType[];
 }
 
-function Favorites({ offers }: FavoritesProps): React.JSX.Element {
+function Favorites({ offers }: FavoritesProps) {
   const cities = [...new Set(offers.map((card: PlaceOfferType) => card.city.name))];
   return (
     <>

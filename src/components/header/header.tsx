@@ -4,40 +4,20 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../lib/types/authorization';
 import { useBasePath } from '../../hooks/use-base-path';
 import { logoutAction } from '../../store/api-actions';
+import UserLink from './user-link/user-link';
+import { selectAuthorizationStatus } from '../../store/user/user.selectors';
 
-function Header(): React.JSX.Element {
+function Header() {
   const pathname = useBasePath() as RoutingType;
   const isLoginPage = pathname === Routing.Login;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isUserAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
 
-  function handleLinkClick(e: React.MouseEvent<HTMLElement>) {
+  const handleLinkClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logoutAction());
-  }
-
-  function getUserLink(isAuthorized: boolean): React.JSX.Element {
-    if (isAuthorized) {
-      return (
-        <Link className="header__nav-link header__nav-link--profile" to={Routing.Favorites}>
-          <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-          <span className="header__user-name user__name">
-              Oliver.conner@gmail.com
-          </span>
-          <span className="header__favorite-count">3</span>
-        </Link>
-      );
-    }
-
-    return (
-      <Link className="header__nav-link header__nav-link--profile" to={Routing.Login}>
-        <div className="header__avatar-wrapper user__avatar-wrapper">
-        </div>
-        <span className="header__login">Sign in</span>
-      </Link>
-    );
-  }
+  };
 
   return (
     <header className="header">
@@ -58,7 +38,7 @@ function Header(): React.JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  {getUserLink(isUserAuthorized)}
+                  <UserLink />
                 </li>
                 {isUserAuthorized &&
                   <li className="header__nav-item">

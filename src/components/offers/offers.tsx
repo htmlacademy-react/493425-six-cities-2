@@ -2,20 +2,24 @@ import PlaceOffer from '../place-offer/place-offer';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../hooks';
-import { setActiveOfferId } from '../../store/action';
+import { memo, useCallback } from 'react';
+import { setActiveOfferId } from '../../store/offer-data/offer-data';
 
 type OffersProps = {
   offers: PlaceOfferType[];
   classNames?: string[];
   offerClassName?: string;
   isSmall?: boolean;
+  useHover?: boolean;
 }
 
-function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps): React.JSX.Element {
+function Offers({ offers, classNames, isSmall, offerClassName, useHover }: OffersProps) {
   const dispatch = useAppDispatch();
-  function handleMouseEnterLeave(id: string) {
-    dispatch(setActiveOfferId(id));
-  }
+  const handleMouseEnterLeave = useCallback((id: string) => {
+    if (useHover) {
+      dispatch(setActiveOfferId(id));
+    }
+  }, [dispatch, useHover]);
 
   return (
     <div className={clsx(classNames)}>
@@ -32,4 +36,5 @@ function Offers({ offers, classNames, isSmall, offerClassName }: OffersProps): R
   );
 }
 
-export default Offers;
+const MemoOffers = memo(Offers);
+export default MemoOffers;

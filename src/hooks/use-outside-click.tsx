@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useOutsideClick(initialIsVisible: boolean) {
+export const useOutsideClick = (initialIsVisible: boolean) => {
   const [isVisible, setIsVisible] = useState(initialIsVisible);
   const ref = useRef(null);
 
-  function handleClickOutside(event: MouseEvent) {
+  const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !(ref.current as HTMLElement).contains(event.target as Node)) {
       setIsVisible(false);
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -18,4 +18,4 @@ export function useOutsideClick(initialIsVisible: boolean) {
   }, []);
 
   return { ref, isVisible, setIsVisible };
-}
+};
