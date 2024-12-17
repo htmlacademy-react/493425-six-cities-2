@@ -11,13 +11,14 @@ export type AppDispatchType = typeof store.dispatch;
 export const NameSpace = {
   Offers: 'OFFERS',
   Offer: 'OFFER',
-  User: 'USER'
+  User: 'USER',
+  Favorites: 'FAVORITES',
+  Navigation: 'NAVIGATION'
 } as const;
 
 export type OffersDataType = {
   city: string;
   offers: PlaceOfferType[];
-  favorites: PlaceOfferType[];
   isOffersLoading: boolean;
   sorting: SortingType;
 };
@@ -33,4 +34,8 @@ export type UserType = {
   user: UserDataType | null;
   authorizationStatus: AuthorizationStatusType;
   authorizationError: string;
+};
+
+export type FavoritesDataType = {
+  favorites: PlaceOfferType[];
 };

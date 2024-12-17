@@ -3,7 +3,7 @@ import { Routing } from '../../../lib/types/routing';
 import { useAppSelector } from '../../../hooks';
 import { selectUser } from '../../../store/user/user.selectors';
 import { isEqual } from 'lodash';
-import { selectFavoriteOffers } from '../../../store/offers-data/offers-data.selectors';
+import { selectFavoriteOffers } from '../../../store/favorites-data/favorites-data.selectors';
 
 function UserLink() {
   const user = useAppSelector(selectUser, isEqual);

@@ -30,7 +30,7 @@ export const fetchFavoriteOffersAction = createAsyncThunk<PlaceOfferType[], unde
   state: StateType;
   extra: AxiosInstance;
 }>(
-  `${NameSpace.Offers}/fetchFavoriteOffers`,
+  `${NameSpace.Favorites}/fetchFavoriteOffers`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<PlaceOfferType[]>(APIRoute.Favorite);
     return data;
@@ -42,7 +42,7 @@ export const changeOfferFavoriteStatusAction = createAsyncThunk<OfferDetailType,
   state: StateType;
   extra: AxiosInstance;
 }>(
-  `${NameSpace.Offers}/changeOfferFavoriteStatus`,
+  `${NameSpace.Favorites}/changeOfferFavoriteStatus`,
   async ({offerId, status}, {extra: api}) => {
     const {data: offer} = await api.post<OfferDetailType>(`${APIRoute.Favorite}/${offerId}/${status}`);
     return offer;
