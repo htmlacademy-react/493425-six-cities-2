@@ -11,6 +11,7 @@ import { Routing } from '../lib/types/routing';
 import { ReviewType } from '../lib/types/review';
 import { ReviewRequestType } from '../lib/types/review-request';
 import { AuthorizationErrorType } from '../lib/types/authorization-error';
+import { FavoriteRequestType } from '../lib/types/favorite-request';
 
 export const fetchOffersAction = createAsyncThunk<PlaceOfferType[], undefined, {
   dispatch: AppDispatchType;
@@ -21,6 +22,30 @@ export const fetchOffersAction = createAsyncThunk<PlaceOfferType[], undefined, {
   async (_arg, {extra: api}) => {
     const {data} = await api.get<PlaceOfferType[]>(APIRoute.Offers);
     return data;
+  }
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk<PlaceOfferType[], undefined, {
+  dispatch: AppDispatchType;
+  state: StateType;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Offers}/fetchFavoriteOffers`,
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<PlaceOfferType[]>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const changeOfferFavoriteStatusAction = createAsyncThunk<OfferDetailType, FavoriteRequestType, {
+  dispatch: AppDispatchType;
+  state: StateType;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.Offers}/changeOfferFavoriteStatus`,
+  async ({offerId, status}, {extra: api}) => {
+    const {data: offer} = await api.post<OfferDetailType>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    return offer;
   }
 );
 
@@ -74,7 +99,7 @@ export const uploadOfferReviewAction = createAsyncThunk<ReviewType, ReviewReques
   async ({comment, rating, offerId}, {extra: api}) => {
     const {data: addedReview} = await api.post<ReviewType>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
     return addedReview;
-  },
+  }
 );
 
 export const checkAuthAction = createAsyncThunk<UserDataType, undefined, {
@@ -83,10 +108,11 @@ export const checkAuthAction = createAsyncThunk<UserDataType, undefined, {
   extra: AxiosInstance;
 }>(
   `${NameSpace.User}/checkAuth`,
-  async (_arg, {extra: api}) => {
+  async (_arg, {dispatch, extra: api}) => {
     const {data: user} = await api.get<UserDataType>(APIRoute.Login);
+    dispatch(fetchFavoriteOffersAction());
     return user;
-  },
+  }
 );
 
 export const loginAction = createAsyncThunk<UserDataType, AuthInfoType, {
@@ -95,17 +121,18 @@ export const loginAction = createAsyncThunk<UserDataType, AuthInfoType, {
   extra: AxiosInstance;
 }>(
   `${NameSpace.User}/login`,
-  async ({email, password}, {dispatch, extra: api}) => {
+  async ({email, password}, {dispatch, extra: api, rejectWithValue}) => {
     try {
       const {data: user} = await api.post<UserDataType>(APIRoute.Login, {email, password});
       saveToken(user.token);
+      dispatch(fetchFavoriteOffersAction());
       dispatch(redirectToRoute(Routing.Main));
       return user;
     } catch (error) {
       const authError = ((error as AxiosError).response?.data as AuthorizationErrorType)?.details[0].messages[0];
-      throw new Error(authError);
+      return rejectWithValue(authError);
     }
-  },
+  }
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, {
@@ -117,5 +144,5 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-  },
+  }
 );

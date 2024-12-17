@@ -18,7 +18,7 @@ function App() {
           <Route path={Routing.Login} element={<Login />} />
           <Route path={Routing.Favorites} element={
             <PrivateRoute>
-              <Favorites offers={[]} />
+              <Favorites />
             </PrivateRoute>
           }
           />

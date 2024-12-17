@@ -27,7 +27,7 @@ export const SECTOR_MAIN_CLASSES: Record<RoutingType, string[]> = {
 
 export const EMPTY_OFFERS_CLASS = 'page__main--index-empty';
 
-export const RATINGS: string[] = [
+export const RATINGS = [
   'perfect',
   'good',
   'not bad',
@@ -43,6 +43,7 @@ export const ATTRIBUTION_COPY = '&copy; <a href="https://www.openstreetmap.org/c
 
 export const APIRoute = {
   Offers: '/offers',
+  Favorite: '/favorite',
   Comments: '/comments',
   Login: '/login',
   Logout: '/logout'

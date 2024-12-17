@@ -17,6 +17,7 @@ export const NameSpace = {
 export type OffersDataType = {
   city: string;
   offers: PlaceOfferType[];
+  favorites: PlaceOfferType[];
   isOffersLoading: boolean;
   sorting: SortingType;
 };

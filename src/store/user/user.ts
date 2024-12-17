@@ -26,6 +26,7 @@ export const user = createSlice({
         state.authorizationError = '';
       })
       .addCase(loginAction.fulfilled, (state, action) => {
+        state.authorizationStatus = AuthorizationStatus.Auth;
         state.user = action.payload;
       })
       .addCase(loginAction.rejected, (state, action) => {
