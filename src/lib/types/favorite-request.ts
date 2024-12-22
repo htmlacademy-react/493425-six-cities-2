@@ -1,4 +1,4 @@
-import { PlaceOfferType } from "./offer-card";
+import { PlaceOfferType } from './offer-card';
 
 export type FavoriteRequestType = {
   offer: PlaceOfferType;

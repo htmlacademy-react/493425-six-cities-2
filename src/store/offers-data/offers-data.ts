@@ -6,7 +6,7 @@ import { PlaceOfferType } from '../../lib/types/offer-card';
 import { WritableDraft } from 'immer';
 
 const changeFavoriteOfferState = (state: WritableDraft<OffersDataType>, actionOffer: PlaceOfferType) => {
-  const offer = state.offers.find(o => o.id === actionOffer.id) as WritableDraft<PlaceOfferType>;
+  const offer = state.offers.find((o) => o.id === actionOffer.id) as WritableDraft<PlaceOfferType>;
   offer.isFavorite = !offer.isFavorite;
 };
 

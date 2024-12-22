@@ -6,7 +6,7 @@ import { WritableDraft } from 'immer';
 const changeFavoriteOffer = (state: WritableDraft<OfferDataType>) => {
   if (state.offer) {
     state.offer.isFavorite = !state.offer.isFavorite;
-  }  
+  }
 };
 
 const initialState: OfferDataType = {
