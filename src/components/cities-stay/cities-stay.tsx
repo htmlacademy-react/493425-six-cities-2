@@ -1,9 +1,11 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 import { useAppSelector } from '../../hooks';
 import { selectCity, selectCityOffers } from '../../store/offers-data/offers-data.selectors';
 import Map from '../map/map';
 import OfferSorting from '../offer-sorting/offer-sorting';
-import Offers from '../offers/offers';
+import PlaceOffer from '../place-offer/place-offer';
+import { PlaceOfferType } from '../../lib/types/offer-card';
+import clsx from 'clsx';
 
 const OFFERS_CLASSES = [
   'cities__places-list',
@@ -22,12 +24,16 @@ function CitiesStay() {
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{offers.length} places to stay in {activeCity}</b>
         <OfferSorting />
-        <Offers
-          offers={offers}
-          classNames={OFFERS_CLASSES}
-          offerClassName='cities'
-          useHover
-        />
+        <div className={clsx(OFFERS_CLASSES)}>
+          {offers.map((card: PlaceOfferType) => (
+            <PlaceOffer
+              key={card.id}
+              card={card}
+              className='cities'
+              useHover
+            />
+          ))}
+        </div>
       </section>
       <div className="cities__right-section">
         <Map

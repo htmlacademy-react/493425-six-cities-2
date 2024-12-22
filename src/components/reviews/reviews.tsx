@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../lib/types/authorization';
 import { OfferDetailType } from '../../lib/types/offer-card';
@@ -10,7 +10,7 @@ import ReviewForm from '../review-form/review-form';
 import Review from '../review/review';
 import { selectOffer } from '../../store/offer-data/offer-data.selectors';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 
 type ReviewsProp = {
   reviews: ReviewType[];
@@ -44,5 +44,4 @@ function Reviews({ reviews }: ReviewsProp) {
   );
 }
 
-const MemoReviews = memo(Reviews);
-export default MemoReviews;
+export default Reviews;

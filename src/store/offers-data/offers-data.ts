@@ -2,6 +2,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { NameSpace, OffersDataType } from '../../lib/types/state';
 import { Sorting, SortingType } from '../../lib/types/sorting';
 import { changeOfferFavoriteStatusAction, fetchOffersAction } from '../api-actions';
+import { PlaceOfferType } from '../../lib/types/offer-card';
+import { WritableDraft } from 'immer';
+
+const changeFavoriteOfferState = (state: WritableDraft<OffersDataType>, actionOffer: PlaceOfferType) => {
+  const offer = state.offers.find(o => o.id === actionOffer.id) as WritableDraft<PlaceOfferType>;
+  offer.isFavorite = !offer.isFavorite;
+};
 
 const initialState: OffersDataType = {
   city: 'Paris',
@@ -33,9 +40,13 @@ export const offersData = createSlice({
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersLoading = false;
       })
-      .addCase(changeOfferFavoriteStatusAction.fulfilled, (state, action) => {
-        const offer = action.payload;
-        state.offers = state.offers.map((o) => o.id === offer.id ? offer : o);
+      .addCase(changeOfferFavoriteStatusAction.pending, (state, action) => {
+        const actionOffer = action.meta.arg.offer;
+        changeFavoriteOfferState(state, actionOffer);
+      })
+      .addCase(changeOfferFavoriteStatusAction.rejected, (state, action) => {
+        const actionOffer = action.meta.arg.offer;
+        changeFavoriteOfferState(state, actionOffer);
       });
   }
 });

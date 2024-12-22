@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import styles from './map.module.css';
 import clsx from 'clsx';
-import { memo, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { useMap } from '../../hooks/use-map';
@@ -90,5 +90,4 @@ function Map({className, center, offers, height}: MapProps) {
   );
 }
 
-const MemoMap = memo(Map);
-export default MemoMap;
+export default Map;

@@ -1,6 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { NameSpace, OfferDataType } from '../../lib/types/state';
 import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction, uploadOfferReviewAction } from '../api-actions';
+import { WritableDraft } from 'immer';
+
+const changeFavoriteOffer = (state: WritableDraft<OfferDataType>) => {
+  if (state.offer) {
+    state.offer.isFavorite = !state.offer.isFavorite;
+  }  
+};
 
 const initialState: OfferDataType = {
   activeOfferId: '',
@@ -37,8 +44,11 @@ export const offerData = createSlice({
       .addCase(uploadOfferReviewAction.fulfilled, (state, action) => {
         state.offerReviews = state.offerReviews.concat(action.payload);
       })
-      .addCase(changeOfferFavoriteStatusAction.fulfilled, (state, action) => {
-        state.offer = action.payload;
+      .addCase(changeOfferFavoriteStatusAction.pending, (state) => {
+        changeFavoriteOffer(state);
+      })
+      .addCase(changeOfferFavoriteStatusAction.rejected, (state) => {
+        changeFavoriteOffer(state);
       });
   }
 });

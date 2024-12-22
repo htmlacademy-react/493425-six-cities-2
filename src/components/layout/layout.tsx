@@ -7,7 +7,7 @@ import Footer from '../footer/footer';
 import { RoutingType, Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
 import { selectCityOffers } from '../../store/offers-data/offers-data.selectors';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 
 function Layout () {
   const pathname = useBasePath() as RoutingType;

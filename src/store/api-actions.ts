@@ -43,9 +43,15 @@ export const changeOfferFavoriteStatusAction = createAsyncThunk<OfferDetailType,
   extra: AxiosInstance;
 }>(
   `${NameSpace.Favorites}/changeOfferFavoriteStatus`,
-  async ({offerId, status}, {extra: api}) => {
-    const {data: offer} = await api.post<OfferDetailType>(`${APIRoute.Favorite}/${offerId}/${status}`);
-    return offer;
+  async ({offer: { id }, status}, {dispatch, getState, rejectWithValue, extra: api}) => {
+    const state = getState();
+    if (state[NameSpace.User].user) {
+      const {data: offer} = await api.post<OfferDetailType>(`${APIRoute.Favorite}/${id}/${status}`);
+      return offer;
+    } else {
+      dispatch(redirectToRoute(Routing.Login));
+      return rejectWithValue(null);
+    }
   }
 );
 

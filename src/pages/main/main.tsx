@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { MoonLoader } from 'react-spinners';
 import styles from './main.module.css';
 import { selectCityOffers, selectIsOffersLoading } from '../../store/offers-data/offers-data.selectors';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 
 function Main() {
   const cityOffersLength = useAppSelector(selectCityOffers, isEqual).length;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PlaceOffer from '../../components/place-offer/place-offer';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { useAppSelector } from '../../hooks';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 import { selectFavoriteOffers } from '../../store/favorites-data/favorites-data.selectors';
 
 function Favorites() {
