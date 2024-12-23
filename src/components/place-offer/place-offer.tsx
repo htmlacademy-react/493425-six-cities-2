@@ -74,7 +74,7 @@ function PlaceOffer({ card, className, isSmall, useHover }: PlaceOfferProps) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${card.rating * 20 }%` }} />
+            <span style={{ width: `${Math.round(card.rating) * 20 }%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

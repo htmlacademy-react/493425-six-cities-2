@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -7,8 +7,9 @@ import { redirectToRoute } from '../../store/action';
 import { Routing } from '../../lib/types/routing';
 import { AuthInfoType } from '../../lib/types/auth-data';
 import styles from './login.module.css';
-import { selectAuthorizationError } from '../../store/user/user.selectors';
+import { selectAuthorizationError, selectUser } from '../../store/user/user.selectors';
 import { setCity } from '../../store/offers-data/offers-data';
+import { CITIES } from '../../const';
 
 function Login() {
   const [state, setState] = useState<AuthInfoType>({
@@ -16,9 +17,11 @@ function Login() {
     password: ''
   });
   const [isValid, setIsValid] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   const authorizationError = useAppSelector(selectAuthorizationError);
+  const user = useAppSelector(selectUser);
+
+  const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -43,9 +46,15 @@ function Login() {
 
   const handleLinkClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(setCity('Amsterdam'));
+    dispatch(setCity(randomCity));
     dispatch(redirectToRoute(Routing.Main));
   };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(redirectToRoute(Routing.Main));
+    }
+  }, [user, dispatch]);
 
   return (
     <>
@@ -87,7 +96,7 @@ function Login() {
         <section className="locations locations--login locations--current">
           <div className="locations__item">
             <Link onClick={handleLinkClick} className="locations__item-link" to='#'>
-              <span>Amsterdam</span>
+              <span>{randomCity}</span>
             </Link>
           </div>
         </section>

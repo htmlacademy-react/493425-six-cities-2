@@ -6,6 +6,8 @@ type ReviewProp = {
 }
 
 function Review({ review }: ReviewProp) {
+  const dateFormatOptions: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -31,7 +33,7 @@ function Review({ review }: ReviewProp) {
           {review.comment}
         </p>
         <time className="reviews__time" dateTime={review.date}>
-          {new Date(review.date).toString()}
+          {new Date(review.date).toLocaleDateString('en-us', dateFormatOptions)}
         </time>
       </div>
     </li>

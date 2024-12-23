@@ -4,9 +4,8 @@ import { useAppSelector } from '../../hooks';
 import CitiesStay from '../../components/cities-stay/cities-stay';
 import CitiesStayEmpty from '../../components/cities-stay-empty/cities-stay-empty';
 import clsx from 'clsx';
-import { MoonLoader } from 'react-spinners';
-import styles from './main.module.css';
 import { selectCityOffers, selectIsOffersLoading } from '../../store/offers-data/offers-data.selectors';
+import Loader from '../../components/loader/loader';
 
 function Main() {
   const cityOffersLength = useAppSelector(selectCityOffers).length;
@@ -23,7 +22,7 @@ function Main() {
           <Cities />
         </section>
       </div>
-      <MoonLoader loading={isOffersLoading} className={styles.spinner} />
+      {isOffersLoading && <Loader />}
       {!isOffersLoading &&
         <div className="cities">
           <div className={clsx(

@@ -13,7 +13,9 @@ const initialState: OfferDataType = {
   activeOfferId: '',
   offer: null,
   offerNearPlaces: [],
-  offerReviews: []
+  offerReviews: [],
+  isReviewUploading: false,
+  reviewUploadingError: ''
 };
 
 export const offerData = createSlice({
@@ -41,8 +43,17 @@ export const offerData = createSlice({
       .addCase(fetchOfferReviewsAction.fulfilled, (state, action) => {
         state.offerReviews = action.payload;
       })
+      .addCase(uploadOfferReviewAction.pending, (state) => {
+        state.reviewUploadingError = '';
+        state.isReviewUploading = true;
+      })
+      .addCase(uploadOfferReviewAction.rejected, (state, action) => {
+        state.reviewUploadingError = action.payload as string;
+        state.isReviewUploading = false;
+      })
       .addCase(uploadOfferReviewAction.fulfilled, (state, action) => {
         state.offerReviews = state.offerReviews.concat(action.payload);
+        state.isReviewUploading = false;
       })
       .addCase(changeOfferFavoriteStatusAction.pending, (state) => {
         changeFavoriteOffer(state);

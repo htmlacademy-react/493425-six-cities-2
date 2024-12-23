@@ -5,7 +5,7 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
-import { selectOffer, selectOfferReviews, selectRandomNearPlaces } from '../../store/offer-data/offer-data.selectors';
+import { selectOffer, selectRandomNearPlaces, selectSortedOfferReviews } from '../../store/offer-data/offer-data.selectors';
 import { clearOffer, setActiveOfferId } from '../../store/offer-data/offer-data';
 import isEqual from 'lodash.isequal';
 import clsx from 'clsx';
@@ -15,7 +15,7 @@ import { OfferDetailType, PlaceOfferType } from '../../lib/types/offer-card';
 function Offer() {
   const { id } = useParams();
   const cardInfo = useAppSelector(selectOffer, isEqual) as OfferDetailType;
-  const reviews = useAppSelector(selectOfferReviews);
+  const reviews = useAppSelector(selectSortedOfferReviews);
   const nearPlaces = useAppSelector(selectRandomNearPlaces);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
 
@@ -95,7 +95,7 @@ function Offer() {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: `${cardInfo.rating * 20 }%` }} />
+                    <span style={{ width: `${Math.round(cardInfo.rating) * 20 }%` }} />
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">{cardInfo.rating}</span>
@@ -144,7 +144,7 @@ function Offer() {
                     </p>
                   </div>
                 </div>
-                <Reviews reviews={reviews} />
+                <Reviews reviews={reviews.slice(0, 10)} />
               </div>
             </div>
             <Map

@@ -12,6 +12,7 @@ export const CITIES = [
 export const LAYOUT_CLASSES: Record<RoutingType, string[]> = {
   [Routing.Main]: ['page--gray', 'page--main'],
   [Routing.Favorites]: [],
+  [Routing.FavoritesEmpty]: ['page--favorites-empty'],
   [Routing.Login]: ['page--gray', 'page--login'],
   [Routing.Offer]: [],
   [Routing.NotFound]: ['page--gray']
@@ -20,12 +21,14 @@ export const LAYOUT_CLASSES: Record<RoutingType, string[]> = {
 export const SECTOR_MAIN_CLASSES: Record<RoutingType, string[]> = {
   [Routing.Main]: ['page__main--index'],
   [Routing.Favorites]: ['page__main--favorites'],
+  [Routing.FavoritesEmpty]: [],
   [Routing.Login]: ['page__main--login'],
   [Routing.Offer]: ['page__main--offer'],
   [Routing.NotFound]: ['page__main--index']
 };
 
 export const EMPTY_OFFERS_CLASS = 'page__main--index-empty';
+export const EMPTY_FAVORITES_CLASS = 'page__main--favorites-empty';
 
 export const RATINGS = [
   'perfect',

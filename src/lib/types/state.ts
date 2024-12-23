@@ -28,12 +28,15 @@ export type OfferDataType = {
   offer: OfferDetailType | null;
   offerNearPlaces: PlaceOfferType[];
   offerReviews: ReviewType[];
+  isReviewUploading: boolean;
+  reviewUploadingError: string;
 };
 
 export type UserType = {
   user: UserDataType | null;
   authorizationStatus: AuthorizationStatusType;
   authorizationError: string;
+  isAuthorizationLoading: boolean;
 };
 
 export type FavoritesDataType = {

@@ -10,7 +10,7 @@ import { dropToken, saveToken } from '../services/token';
 import { Routing } from '../lib/types/routing';
 import { ReviewType } from '../lib/types/review';
 import { ReviewRequestType } from '../lib/types/review-request';
-import { AuthorizationErrorType } from '../lib/types/authorization-error';
+import { RequestErrorType } from '../lib/types/request-error';
 import { FavoriteRequestType } from '../lib/types/favorite-request';
 
 export const fetchOffersAction = createAsyncThunk<PlaceOfferType[], undefined, {
@@ -102,9 +102,14 @@ export const uploadOfferReviewAction = createAsyncThunk<ReviewType, ReviewReques
   extra: AxiosInstance;
 }>(
   `${NameSpace.Offer}/uploadOfferReview`,
-  async ({comment, rating, offerId}, {extra: api}) => {
-    const {data: addedReview} = await api.post<ReviewType>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
-    return addedReview;
+  async ({comment, rating, offerId}, {extra: api, rejectWithValue}) => {
+    try {
+      const {data: addedReview} = await api.post<ReviewType>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
+      return addedReview;
+    } catch (error) {
+      const reviewError = ((error as AxiosError).response?.data as RequestErrorType)?.details[0].messages[0];
+      return rejectWithValue(reviewError);
+    }
   }
 );
 
@@ -135,7 +140,7 @@ export const loginAction = createAsyncThunk<UserDataType, AuthInfoType, {
       dispatch(redirectToRoute(Routing.Main));
       return user;
     } catch (error) {
-      const authError = ((error as AxiosError).response?.data as AuthorizationErrorType)?.details[0].messages[0];
+      const authError = ((error as AxiosError).response?.data as RequestErrorType)?.details[0].messages[0];
       return rejectWithValue(authError);
     }
   }
