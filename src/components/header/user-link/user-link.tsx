@@ -7,7 +7,7 @@ import { selectFavoriteOffers } from '../../../store/favorites-data/favorites-da
 
 function UserLink() {
   const user = useAppSelector(selectUser, isEqual);
-  const favoriteOffersLength = useAppSelector(selectFavoriteOffers, isEqual).length;
+  const favoriteOffersLength = useAppSelector(selectFavoriteOffers).length;
 
   if (user) {
     return (

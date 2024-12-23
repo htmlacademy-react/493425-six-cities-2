@@ -15,8 +15,8 @@ import { OfferDetailType, PlaceOfferType } from '../../lib/types/offer-card';
 function Offer() {
   const { id } = useParams();
   const cardInfo = useAppSelector(selectOffer, isEqual) as OfferDetailType;
-  const reviews = useAppSelector(selectOfferReviews, isEqual);
-  const nearPlaces = useAppSelector(selectRandomNearPlaces, isEqual);
+  const reviews = useAppSelector(selectOfferReviews);
+  const nearPlaces = useAppSelector(selectRandomNearPlaces);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
 
   const dispatch = useAppDispatch();

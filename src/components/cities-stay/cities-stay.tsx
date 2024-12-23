@@ -1,4 +1,3 @@
-import isEqual from 'lodash.isequal';
 import { useAppSelector } from '../../hooks';
 import { selectCity, selectCityOffers } from '../../store/offers-data/offers-data.selectors';
 import Map from '../map/map';
@@ -14,7 +13,7 @@ const OFFERS_CLASSES = [
 ];
 
 function CitiesStay() {
-  const offers = useAppSelector(selectCityOffers, isEqual);
+  const offers = useAppSelector(selectCityOffers);
   const center = offers[0]?.location;
   const activeCity = useAppSelector(selectCity);
 

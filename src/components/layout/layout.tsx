@@ -7,14 +7,13 @@ import Footer from '../footer/footer';
 import { RoutingType, Routing } from '../../lib/types/routing';
 import { useAppSelector } from '../../hooks';
 import { selectCityOffers } from '../../store/offers-data/offers-data.selectors';
-import isEqual from 'lodash.isequal';
 
 function Layout () {
   const pathname = useBasePath() as RoutingType;
   const layoutClasses = LAYOUT_CLASSES[pathname];
   const mainClasses = SECTOR_MAIN_CLASSES[pathname];
   const isFooterExist = pathname === Routing.Favorites;
-  const offersLength = useAppSelector(selectCityOffers, isEqual).length;
+  const offersLength = useAppSelector(selectCityOffers).length;
   const emptyMainClass = pathname === Routing.Main && !offersLength && EMPTY_OFFERS_CLASS;
 
   return (
