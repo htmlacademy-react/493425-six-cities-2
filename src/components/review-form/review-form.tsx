@@ -1,17 +1,25 @@
-import { ChangeEvent, FormEvent, Fragment, memo, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 import { ReviewFormValueType } from '../../lib/types/review-form-value';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RATINGS } from '../../const';
+import isEqual from 'lodash.isequal';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectIsReviewUploading, selectOffer, selectReviewUploadingError } from '../../store/offer-data/offer-data.selectors';
+import { OfferDetailType } from '../../lib/types/offer-card';
+import { ReviewRequestType } from '../../lib/types/review-request';
+import { uploadOfferReviewAction } from '../../store/api-actions';
+import styles from './review-form.module.css';
+import clsx from 'clsx';
 
 const EMPTY_FORM = {
   review: '',
   rating: ''
 };
 
-type ReviewFormProps = {
-  onSubmitForm: (value: ReviewFormValueType) => void;
-};
-
-function ReviewForm({onSubmitForm}: ReviewFormProps) {
+function ReviewForm() {
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector(selectOffer, isEqual);
+  const reviewError = useAppSelector(selectReviewUploadingError);
+  const reviewUploading = useAppSelector(selectIsReviewUploading);
   const [value, setValue] = useState<ReviewFormValueType>(EMPTY_FORM);
 
   const isValid = value.rating !== ''
@@ -32,9 +40,20 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmitForm(value);
-    setValue(EMPTY_FORM);
+
+    const uploadedReview: ReviewRequestType = {
+      comment: value.review,
+      rating: Number(value.rating),
+      offerId: (offer as OfferDetailType).id
+    };
+    dispatch(uploadOfferReviewAction(uploadedReview));
   };
+
+  useEffect(() => {
+    if (!reviewUploading && !reviewError) {
+      setValue(EMPTY_FORM);
+    }
+  }, [reviewUploading, reviewError]);
 
   return (
     <form
@@ -57,10 +76,15 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
               id={`${i + 1}-star`}
               type="radio"
               onChange={handleFieldChange}
+              disabled={reviewUploading}
             />
             <label
               htmlFor={`${i + 1}-star`}
-              className="reviews__rating-label form__rating-label"
+              className={clsx(
+                'reviews__rating-label',
+                'form__rating-label',
+                { [styles.disabled]: reviewUploading }
+              )}
               title={title}
             >
               <svg className="form__star-image" width={37} height={33}>
@@ -77,7 +101,9 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={value.review}
         onChange={handleFieldChange}
+        disabled={reviewUploading}
       />
+      {reviewError && <p className={styles.error}>{reviewError}</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -88,7 +114,7 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || reviewUploading}
         >
           Submit
         </button>
@@ -97,5 +123,4 @@ function ReviewForm({onSubmitForm}: ReviewFormProps) {
   );
 }
 
-const MemoReviewForm = memo(ReviewForm);
-export default MemoReviewForm;
+export default ReviewForm;

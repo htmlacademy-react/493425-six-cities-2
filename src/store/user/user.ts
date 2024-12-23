@@ -6,7 +6,8 @@ import { AuthorizationStatus } from '../../lib/types/authorization';
 const initialState: UserType = {
   user: null,
   authorizationStatus: AuthorizationStatus.Unknown,
-  authorizationError: ''
+  authorizationError: '',
+  isAuthorizationLoading: true
 };
 
 export const user = createSlice({
@@ -15,12 +16,17 @@ export const user = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(checkAuthAction.pending, (state) => {
+        state.isAuthorizationLoading = true;
+      })
       .addCase(checkAuthAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.user = action.payload;
+        state.isAuthorizationLoading = false;
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.isAuthorizationLoading = false;
       })
       .addCase(loginAction.pending, (state) => {
         state.authorizationError = '';

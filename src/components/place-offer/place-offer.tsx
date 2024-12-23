@@ -4,40 +4,37 @@ import { PlaceOfferType } from '../../lib/types/offer-card';
 import { Routing } from '../../lib/types/routing';
 import { memo } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { redirectToRoute } from '../../store/action';
 import { changeOfferFavoriteStatusAction } from '../../store/api-actions';
-import { useStore } from 'react-redux';
-import { NameSpace, StateType } from '../../lib/types/state';
-import { AnyAction, Store } from '@reduxjs/toolkit';
+import { setActiveOfferId } from '../../store/offer-data/offer-data';
 
 type PlaceOfferProps = {
   card: PlaceOfferType;
-  onMouseEnterLeave?: (id: string) => void;
   className?: string;
   isSmall?: boolean;
+  useHover?: boolean;
 }
 
-function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferProps) {
-  const store: Store<StateType, AnyAction> = useStore();
+function PlaceOffer({ card, className, isSmall, useHover }: PlaceOfferProps) {
   const dispatch = useAppDispatch();
 
   const handleClickButtonFavorite = () => {
-    const user = store.getState()[NameSpace.User].user;
-    if (user) {
-      dispatch(changeOfferFavoriteStatusAction({
-        offerId: card.id,
-        status: card.isFavorite ? 0 : 1
-      }));
-    } else {
-      dispatch(redirectToRoute(Routing.Login));
+    dispatch(changeOfferFavoriteStatusAction({
+      offer: card,
+      status: card.isFavorite ? 0 : 1
+    }));
+  };
+
+  const handleOnMouseEnterLeave = (id: string) => {
+    if (useHover) {
+      dispatch(setActiveOfferId(id));
     }
   };
 
   return (
     <article
       className={clsx(className && `${className }__card`, 'place-card')}
-      onMouseEnter={() => onMouseEnterLeave?.(card.id)}
-      onMouseLeave={() => onMouseEnterLeave?.('')}
+      onMouseEnter={() => handleOnMouseEnterLeave(card.id)}
+      onMouseLeave={() => handleOnMouseEnterLeave('')}
     >
       {card.isPremium &&
         <div className="place-card__mark">
@@ -77,7 +74,7 @@ function PlaceOffer({ card, onMouseEnterLeave, className, isSmall }: PlaceOfferP
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${card.rating * 20 }%` }} />
+            <span style={{ width: `${Math.round(card.rating) * 20 }%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

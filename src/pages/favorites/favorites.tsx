@@ -3,18 +3,22 @@ import { Link } from 'react-router-dom';
 import PlaceOffer from '../../components/place-offer/place-offer';
 import { PlaceOfferType } from '../../lib/types/offer-card';
 import { useAppSelector } from '../../hooks';
-import { isEqual } from 'lodash';
 import { selectFavoriteOffers } from '../../store/favorites-data/favorites-data.selectors';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 
 function Favorites() {
-  const offers = useAppSelector(selectFavoriteOffers, isEqual);
+  const offers = useAppSelector(selectFavoriteOffers);
   const cities = [...new Set(offers.map((card: PlaceOfferType) => card.city.name))];
+  const isEmpty = !cities.length;
+
   return (
     <>
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
       <div className="page__favorites-container container">
+        {isEmpty && <FavoritesEmpty />}
+        {!isEmpty &&
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
@@ -42,7 +46,7 @@ function Favorites() {
               </li>
             ))}
           </ul>
-        </section>
+        </section>}
       </div>
     </>
   );

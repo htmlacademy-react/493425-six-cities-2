@@ -2,40 +2,30 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import Reviews from '../../components/reviews/reviews';
 import Map from '../../components/map/map';
-import Offers from '../../components/offers/offers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
-import { selectOffer, selectOfferReviews, selectRandomNearPlaces } from '../../store/offer-data/offer-data.selectors';
+import { selectOffer, selectRandomNearPlaces, selectSortedOfferReviews } from '../../store/offer-data/offer-data.selectors';
 import { clearOffer, setActiveOfferId } from '../../store/offer-data/offer-data';
-import { isEqual } from 'lodash';
-import { redirectToRoute } from '../../store/action';
-import { Routing } from '../../lib/types/routing';
+import isEqual from 'lodash.isequal';
 import clsx from 'clsx';
-import { Store, AnyAction } from '@reduxjs/toolkit';
-import { useStore } from 'react-redux';
-import { NameSpace, StateType } from '../../lib/types/state';
+import PlaceOffer from '../../components/place-offer/place-offer';
+import { OfferDetailType, PlaceOfferType } from '../../lib/types/offer-card';
 
 function Offer() {
   const { id } = useParams();
-  const store: Store<StateType, AnyAction> = useStore();
-  const cardInfo = useAppSelector(selectOffer, isEqual);
-  const reviews = useAppSelector(selectOfferReviews, isEqual);
-  const nearPlaces = useAppSelector(selectRandomNearPlaces, isEqual);
+  const cardInfo = useAppSelector(selectOffer, isEqual) as OfferDetailType;
+  const reviews = useAppSelector(selectSortedOfferReviews);
+  const nearPlaces = useAppSelector(selectRandomNearPlaces);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
 
   const dispatch = useAppDispatch();
 
   const handleClickButtonFavorite = () => {
-    const user = store.getState()[NameSpace.User].user;
-    if (user && cardInfo) {
-      dispatch(changeOfferFavoriteStatusAction({
-        offerId: cardInfo.id,
-        status: cardInfo.isFavorite ? 0 : 1
-      }));
-    } else {
-      dispatch(redirectToRoute(Routing.Login));
-    }
+    dispatch(changeOfferFavoriteStatusAction({
+      offer: cardInfo,
+      status: cardInfo.isFavorite ? 0 : 1
+    }));
   };
 
   useEffect(() => {
@@ -105,7 +95,7 @@ function Offer() {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: `${cardInfo.rating * 20 }%` }} />
+                    <span style={{ width: `${Math.round(cardInfo.rating) * 20 }%` }} />
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">{cardInfo.rating}</span>
@@ -154,7 +144,7 @@ function Offer() {
                     </p>
                   </div>
                 </div>
-                <Reviews reviews={reviews} />
+                <Reviews reviews={reviews.slice(0, 10)} />
               </div>
             </div>
             <Map
@@ -169,11 +159,15 @@ function Offer() {
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <Offers
-                offers={nearPlaces}
-                classNames={nearPlaceClasses}
-                offerClassName='near-places'
-              />
+              <div className={clsx(nearPlaceClasses)}>
+                {nearPlaces.map((card: PlaceOfferType) => (
+                  <PlaceOffer
+                    key={card.id}
+                    card={card}
+                    className='near-places'
+                  />
+                ))}
+              </div>
             </section>
           </div>
         </>}

@@ -4,9 +4,10 @@ import { Sorting, SortingType } from '../../lib/types/sorting';
 import { useOutsideClick } from '../../hooks/use-outside-click';
 import { selectSorting } from '../../store/offers-data/offers-data.selectors';
 import { setSorting } from '../../store/offers-data/offers-data';
+import { useCallback, useState } from 'react';
 
 function OfferSorting() {
-  const { ref, isVisible, setIsVisible } = useOutsideClick(false);
+  const [isVisible, setIsVisible] = useState(false);
   const sorting = useAppSelector(selectSorting);
   const dispatch = useAppDispatch();
 
@@ -14,6 +15,12 @@ function OfferSorting() {
     dispatch(setSorting(s));
     setIsVisible(false);
   };
+
+  const setInvisible = useCallback(() => {
+    setIsVisible(false);
+  }, []);
+
+  const ref = useOutsideClick(setInvisible);
 
   return (
     <form className="places__sorting" action="#" method="get">

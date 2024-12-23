@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-export const useOutsideClick = (initialIsVisible: boolean) => {
-  const [isVisible, setIsVisible] = useState(initialIsVisible);
+export const useOutsideClick = (func: () => void) => {
   const ref = useRef(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !(ref.current as HTMLElement).contains(event.target as Node)) {
-      setIsVisible(false);
+      func();
     }
   };
 
@@ -15,7 +14,7 @@ export const useOutsideClick = (initialIsVisible: boolean) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  });
 
-  return { ref, isVisible, setIsVisible };
+  return ref;
 };

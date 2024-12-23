@@ -20,9 +20,7 @@ function Cities() {
               'tabs__item',
               {'tabs__item--active': city === activeCity}
             )}
-            onClick={() => {
-              dispatch(setCity(city));
-            }}
+            onClick={() => dispatch(setCity(city))}
           >
             <span>{city}</span>
           </Link>

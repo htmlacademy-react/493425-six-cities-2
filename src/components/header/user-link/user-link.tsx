@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { Routing } from '../../../lib/types/routing';
 import { useAppSelector } from '../../../hooks';
 import { selectUser } from '../../../store/user/user.selectors';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash.isequal';
 import { selectFavoriteOffers } from '../../../store/favorites-data/favorites-data.selectors';
 
 function UserLink() {
   const user = useAppSelector(selectUser, isEqual);
-  const favoriteOffersLength = useAppSelector(selectFavoriteOffers, isEqual).length;
+  const favoriteOffersLength = useAppSelector(selectFavoriteOffers).length;
 
   if (user) {
     return (
