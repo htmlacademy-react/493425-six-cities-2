@@ -19,10 +19,10 @@ function Layout () {
   const emptyFavoriteClass = pathname === Routing.Favorites && !favoritesLength && EMPTY_FAVORITES_CLASS;
 
   const isFavorites = pathname === Routing.Favorites;
-  if (isFavorites) {
-    pathname += !favoritesLength ? '-empty' : '';
+  if (isFavorites && !favoritesLength) {
+    pathname = Routing.FavoritesEmpty;
   }
-  const layoutClasses = LAYOUT_CLASSES[pathname as RoutingType];
+  const layoutClasses = LAYOUT_CLASSES[pathname];
 
   return (
     <div className={clsx('page', layoutClasses)}>
