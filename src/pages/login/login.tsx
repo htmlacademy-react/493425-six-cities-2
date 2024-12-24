@@ -12,6 +12,7 @@ import { setCity } from '../../store/offers-data/offers-data';
 import { CITIES } from '../../const';
 
 function Login() {
+  const PASSWORD_REGEXP= /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
   const [state, setState] = useState<AuthInfoType>({
     email: '',
     password: ''
@@ -21,7 +22,7 @@ function Login() {
   const authorizationError = useAppSelector(selectAuthorizationError);
   const user = useAppSelector(selectUser);
 
-  const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
+  const [randomCity, ] = useState<string>(CITIES[Math.floor(Math.random() * CITIES.length)]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fieldName = e.target.name;
@@ -33,7 +34,7 @@ function Login() {
 
     setState(newState);
     const isNotEmptyInputs = Object.values(newState).every((value: string) => value.trim());
-    setIsValid(isNotEmptyInputs && e.target.validity.valid);
+    setIsValid(isNotEmptyInputs && e.target.validity.valid && PASSWORD_REGEXP.test(newState.password));
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
