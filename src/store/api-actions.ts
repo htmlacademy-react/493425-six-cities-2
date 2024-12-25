@@ -107,7 +107,7 @@ export const uploadOfferReviewAction = createAsyncThunk<ReviewType, ReviewReques
       const {data: addedReview} = await api.post<ReviewType>(`${APIRoute.Comments}/${offerId}`, {comment, rating});
       return addedReview;
     } catch (error) {
-      const reviewError = ((error as AxiosError).response?.data as RequestErrorType)?.details[0].messages[0];
+      const reviewError = ((error as AxiosError).response?.data as RequestErrorType).message || 'error';
       return rejectWithValue(reviewError);
     }
   }

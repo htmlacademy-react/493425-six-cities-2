@@ -16,12 +16,13 @@ function CitiesStay() {
   const offers = useAppSelector(selectCityOffers);
   const center = offers[0]?.location;
   const activeCity = useAppSelector(selectCity);
+  const placeWord = offers.length === 1 ? 'place' : 'places';
 
   return (
     <>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{offers.length} places to stay in {activeCity}</b>
+        <b className="places__found">{offers.length} {placeWord} to stay in {activeCity}</b>
         <OfferSorting />
         <div className={clsx(OFFERS_CLASSES)}>
           {offers.map((card: PlaceOfferType) => (

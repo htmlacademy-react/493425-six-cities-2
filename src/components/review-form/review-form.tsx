@@ -49,6 +49,8 @@ function ReviewForm() {
     dispatch(uploadOfferReviewAction(uploadedReview));
   };
 
+  const getStarValue = (i: number) => 5 - i;
+
   useEffect(() => {
     if (!reviewUploading && !reviewError) {
       setValue(EMPTY_FORM);
@@ -71,15 +73,15 @@ function ReviewForm() {
             <input
               className="form__rating-input visually-hidden"
               name="rating"
-              value={i + 1}
-              checked={Number(value.rating) === i + 1}
-              id={`${i + 1}-star`}
+              value={getStarValue(i)}
+              checked={Number(value.rating) === getStarValue(i)}
+              id={`${getStarValue(i) }-stars`}
               type="radio"
               onChange={handleFieldChange}
               disabled={reviewUploading}
             />
             <label
-              htmlFor={`${i + 1}-star`}
+              htmlFor={`${getStarValue(i) }-stars`}
               className={clsx(
                 'reviews__rating-label',
                 'form__rating-label',

@@ -7,6 +7,10 @@ import cloneDeep from 'lodash.clonedeep';
 
 const changeFavoritesState = (state: WritableDraft<FavoritesDataType>, arg: FavoriteRequestType) => {
   const offer = cloneDeep(arg.offer);
+  if (!offer) {
+    return;
+  }
+
   offer.isFavorite = !offer.isFavorite;
   if (offer.isFavorite) {
     state.favorites = state.favorites.concat(offer);
