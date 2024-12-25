@@ -57,7 +57,7 @@ function Offer() {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {cardInfo.images.map((src: string) => (
+                {cardInfo.images.slice(0, 6).map((src: string) => (
                   <div key={src} className="offer__image-wrapper">
                     <img
                       className="offer__image"
@@ -126,7 +126,11 @@ function Offer() {
                 <div className="offer__host">
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
-                    <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                    <div className={clsx(
+                      'offer__avatar-wrapper',
+                      {'offer__avatar-wrapper--pro': cardInfo.host.isPro},
+                      'user__avatar-wrapper')}
+                    >
                       <img
                         className="offer__avatar user__avatar"
                         src={cardInfo.host.avatarUrl}
@@ -144,7 +148,7 @@ function Offer() {
                     </p>
                   </div>
                 </div>
-                <Reviews reviews={reviews.slice(0, 10)} />
+                <Reviews reviews={reviews} />
               </div>
             </div>
             <Map

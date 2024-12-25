@@ -19,7 +19,7 @@ function Reviews({ reviews }: ReviewsProp) {
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.map((r: ReviewType) => <Review key={r.id} review={r} />)}
+        {reviews.slice(0, 10).map((r: ReviewType) => <Review key={r.id} review={r} />)}
       </ul>
       {isUserAuthorized && <ReviewForm />}
     </section>

@@ -12,7 +12,7 @@ import { setCity } from '../../store/offers-data/offers-data';
 import { CITIES } from '../../const';
 
 function Login() {
-  const PASSWORD_REGEXP= /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+  const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
   const [state, setState] = useState<AuthInfoType>({
     email: '',
     password: ''
