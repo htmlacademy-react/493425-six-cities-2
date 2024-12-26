@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import { ReviewType } from '../../lib/types/review';
+import { DATE_FORMAT_OPTIONS } from '../../const';
 
 type ReviewProp = {
   review: ReviewType;
 }
 
 function Review({ review }: ReviewProp) {
-  const dateFormatOptions: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
-
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -33,7 +32,7 @@ function Review({ review }: ReviewProp) {
           {review.comment}
         </p>
         <time className="reviews__time" dateTime={review.date}>
-          {new Date(review.date).toLocaleDateString('en-us', dateFormatOptions)}
+          {new Date(review.date).toLocaleDateString('en-us', DATE_FORMAT_OPTIONS)}
         </time>
       </div>
     </li>

@@ -51,3 +51,5 @@ export const APIRoute = {
   Login: '/login',
   Logout: '/logout'
 } as const;
+
+export const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
