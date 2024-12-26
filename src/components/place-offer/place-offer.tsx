@@ -24,7 +24,7 @@ function PlaceOffer({ card, className, isSmall, useHover }: PlaceOfferProps) {
     }));
   };
 
-  const handleOnMouseEnterLeave = (id: string) => {
+  const handleMouseEnterLeave = (id: string) => {
     if (useHover) {
       dispatch(setActiveOfferId(id));
     }
@@ -33,8 +33,8 @@ function PlaceOffer({ card, className, isSmall, useHover }: PlaceOfferProps) {
   return (
     <article
       className={clsx(className && `${className }__card`, 'place-card')}
-      onMouseEnter={() => handleOnMouseEnterLeave(card.id)}
-      onMouseLeave={() => handleOnMouseEnterLeave('')}
+      onMouseEnter={() => handleMouseEnterLeave(card.id)}
+      onMouseLeave={() => handleMouseEnterLeave('')}
     >
       {card.isPremium &&
         <div className="place-card__mark">
