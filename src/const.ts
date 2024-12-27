@@ -53,3 +53,7 @@ export const APIRoute = {
 } as const;
 
 export const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
+
+export const MAX_NUMBER_REVIEWS = 10;
+
+export const NEAR_PLACES_NUMBER = 3;

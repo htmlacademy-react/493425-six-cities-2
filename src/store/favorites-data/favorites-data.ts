@@ -1,21 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FavoritesDataType, NameSpace } from '../../lib/types/state';
 import { changeOfferFavoriteStatusAction, fetchFavoriteOffersAction } from '../api-actions';
-import { FavoriteRequestType } from '../../lib/types/favorite-request';
 import { WritableDraft } from 'immer';
 import cloneDeep from 'lodash.clonedeep';
+import { PlaceOfferType } from '../../lib/types/offer-card';
 
-const changeFavoritesState = (state: WritableDraft<FavoritesDataType>, arg: FavoriteRequestType) => {
-  const offer = cloneDeep(arg.offer);
-  if (!offer) {
-    return;
-  }
+type ChangeFavoritesStateArguments = {
+  state: WritableDraft<FavoritesDataType>;
+  isFavorite: boolean;
+  offer: PlaceOfferType;
+}
 
-  offer.isFavorite = !offer.isFavorite;
-  if (offer.isFavorite) {
-    state.favorites = state.favorites.concat(offer);
+const changeFavoritesState = ({ state, isFavorite, offer }: ChangeFavoritesStateArguments) => {
+  const newOffer = cloneDeep(offer);
+  newOffer.isFavorite = isFavorite;
+
+  if (isFavorite) {
+    state.favorites = state.favorites.concat(newOffer);
   } else {
-    state.favorites = state.favorites.filter((o) => o.id !== offer.id);
+    state.favorites = state.favorites.filter((favoriteOffer) => favoriteOffer.id !== newOffer.id);
   }
 };
 
@@ -33,10 +36,18 @@ export const favoritesData = createSlice({
         state.favorites = action.payload;
       })
       .addCase(changeOfferFavoriteStatusAction.pending, (state, action) => {
-        changeFavoritesState(state, action.meta.arg);
+        changeFavoritesState({
+          state,
+          isFavorite: Boolean(action.meta.arg.status),
+          offer: action.meta.arg.offer
+        });
       })
       .addCase(changeOfferFavoriteStatusAction.rejected, (state, action) => {
-        changeFavoritesState(state, action.meta.arg);
+        changeFavoritesState({
+          state,
+          isFavorite: !action.meta.arg.status,
+          offer: action.meta.arg.offer
+        });
       });
   }
 });

@@ -2,10 +2,21 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import { NameSpace, OfferDataType } from '../../lib/types/state';
 import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction, uploadOfferReviewAction } from '../api-actions';
 import { WritableDraft } from 'immer';
+import { getRandomItems } from '../../utils/get-random-items';
+import { PlaceOfferType } from '../../lib/types/offer-card';
+import { NEAR_PLACES_NUMBER } from '../../const';
 
-const changeFavoriteOffer = (state: WritableDraft<OfferDataType>) => {
-  if (state.offer) {
+const changeFavoriteOffer = (state: WritableDraft<OfferDataType>, offer: PlaceOfferType) => {
+  if (state.offer && offer && offer.id === state.offer.id) {
     state.offer.isFavorite = !state.offer.isFavorite;
+  }
+  if (offer) {
+    state.offerNearPlaces = state.offerNearPlaces.map((nearOffer) => {
+      if (offer.id === nearOffer.id) {
+        nearOffer.isFavorite = !nearOffer.isFavorite;
+      }
+      return nearOffer;
+    });
   }
 };
 
@@ -38,7 +49,7 @@ export const offerData = createSlice({
         state.offer = action.payload;
       })
       .addCase(fetchOfferNearPlacesAction.fulfilled, (state, action) => {
-        state.offerNearPlaces = action.payload;
+        state.offerNearPlaces = getRandomItems(NEAR_PLACES_NUMBER, action.payload);
       })
       .addCase(fetchOfferReviewsAction.fulfilled, (state, action) => {
         state.offerReviews = action.payload;
@@ -55,11 +66,11 @@ export const offerData = createSlice({
         state.offerReviews = state.offerReviews.concat(action.payload);
         state.isReviewUploading = false;
       })
-      .addCase(changeOfferFavoriteStatusAction.pending, (state) => {
-        changeFavoriteOffer(state);
+      .addCase(changeOfferFavoriteStatusAction.pending, (state, action) => {
+        changeFavoriteOffer(state, action.meta.arg.offer);
       })
-      .addCase(changeOfferFavoriteStatusAction.rejected, (state) => {
-        changeFavoriteOffer(state);
+      .addCase(changeOfferFavoriteStatusAction.rejected, (state, action) => {
+        changeFavoriteOffer(state, action.meta.arg.offer);
       });
   }
 });
