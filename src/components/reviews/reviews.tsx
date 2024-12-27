@@ -4,6 +4,7 @@ import { ReviewType } from '../../lib/types/review';
 import ReviewForm from '../review-form/review-form';
 import Review from '../review/review';
 import { selectAuthorizationStatus } from '../../store/user/user.selectors';
+import { MAX_NUMBER_REVIEWS } from '../../const';
 
 type ReviewsProp = {
   reviews: ReviewType[];
@@ -19,7 +20,7 @@ function Reviews({ reviews }: ReviewsProp) {
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.slice(0, 10).map((r: ReviewType) => <Review key={r.id} review={r} />)}
+        {reviews.slice(0, MAX_NUMBER_REVIEWS).map((r: ReviewType) => <Review key={r.id} review={r} />)}
       </ul>
       {isUserAuthorized && <ReviewForm />}
     </section>

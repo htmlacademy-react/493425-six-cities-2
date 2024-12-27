@@ -5,7 +5,7 @@ import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { changeOfferFavoriteStatusAction, fetchOfferAction, fetchOfferNearPlacesAction, fetchOfferReviewsAction } from '../../store/api-actions';
-import { selectOffer, selectRandomNearPlaces, selectSortedOfferReviews } from '../../store/offer-data/offer-data.selectors';
+import { selectOffer, selectOfferNearPlaces, selectSortedOfferReviews } from '../../store/offer-data/offer-data.selectors';
 import { clearOffer, setActiveOfferId } from '../../store/offer-data/offer-data';
 import isEqual from 'lodash.isequal';
 import clsx from 'clsx';
@@ -16,7 +16,7 @@ function Offer() {
   const { id } = useParams();
   const cardInfo = useAppSelector(selectOffer, isEqual) as OfferDetailType;
   const reviews = useAppSelector(selectSortedOfferReviews);
-  const nearPlaces = useAppSelector(selectRandomNearPlaces);
+  const nearPlaces = useAppSelector(selectOfferNearPlaces);
   const mapPlaces = cardInfo && nearPlaces.concat(cardInfo) || [];
 
   const dispatch = useAppDispatch();

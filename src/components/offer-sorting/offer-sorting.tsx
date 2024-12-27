@@ -44,17 +44,17 @@ function OfferSorting() {
         ref={ref}
       >
         {
-          Object.values(Sorting).map((s: SortingType) => (
+          Object.values(Sorting).map((sortingItem: SortingType) => (
             <li
-              key={s}
+              key={sortingItem}
               tabIndex={0}
-              onClick={() => setCurrentSorting(s)}
+              onClick={() => setCurrentSorting(sortingItem)}
               className={clsx(
                 'places__option',
-                { 'places__option--active': s === sorting }
+                { 'places__option--active': sortingItem === sorting }
               )}
             >
-              {s}
+              {sortingItem}
             </li>
           ))
         }

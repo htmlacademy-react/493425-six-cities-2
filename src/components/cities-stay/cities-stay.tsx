@@ -14,7 +14,7 @@ const OFFERS_CLASSES = [
 
 function CitiesStay() {
   const offers = useAppSelector(selectCityOffers);
-  const center = offers[0]?.location;
+  const center = offers[0]?.city.location;
   const activeCity = useAppSelector(selectCity);
   const placeWord = offers.length === 1 ? 'place' : 'places';
 
